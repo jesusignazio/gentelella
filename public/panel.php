@@ -1,7 +1,7 @@
 <div class="main_container">
     <div class="col-md-3 left_col menu_fixed">
         <div class="left_col scroll-view">
-                <a href="index.php"><img class="image-resposive" align="middle" id="logo" src="images/escudo.png"></a>
+                <a href="#" class="navbar-left"><img src="/images/escudo.png"></a>
 
             <div class="clearfix"></div>
 
