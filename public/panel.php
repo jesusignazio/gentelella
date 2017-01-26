@@ -2,7 +2,7 @@
     <div class="col-md-3 left_col menu_fixed">
         <div class="left_col scroll-view">
             <div style="border: 0;">
-                <a href="index.php"><img class="image-resposive" align="middle" id="logo" src="images/escudo.png"></a>
+                <a href="index.php"><img class="image-resposive" width="150px" align="middle" id="logo" src="images/escudo.png"></a>
             </div>
 
             <div class="clearfix"></div>
