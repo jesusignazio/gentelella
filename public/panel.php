@@ -1,24 +1,13 @@
 <div class="main_container">
     <div class="col-md-3 left_col menu_fixed">
         <div class="left_col scroll-view">
-               <div class="navbar" style="border: 0;">                
-                   <a href="index.php"><img align="middle" id="logo" src="images/escudo.png"></a>            
+            <div class="navbar nav_title" style="border: 0;">
+                <a href="index.php"><img class="img-responsive" align="middle" id="logo" src="../images/logo.png"></a>
             </div>
+
             <div class="clearfix"></div>
 
-            <!-- menu profile quick info >
-            <div class="profile">
-                <div id="profile_pic" class="profile_pic">
-                    <img src="images/photo.png" alt="..." class="img-circle profile_img">
-                </div>
-                <div class="profile_info">
-                    <span>Hola,</span>
-                    <h2>Jesús Ignacio</h2>
-                </div>
-            </div>
-            </menu profile quick info -->
-
-            <!--br /-->
+            <br />
 
             <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
