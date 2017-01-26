@@ -4,7 +4,7 @@
                <div class="navbar" style="border: 0;">                
                    <a href="index.php"><img align="middle" id="logo" src="images/escudo.png"></a>            
             </div>
-            <div class="clearfix"></div>
+            <!--div class="clearfix"></div-->
 
             <!-- menu profile quick info >
             <div class="profile">
