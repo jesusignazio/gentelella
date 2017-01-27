@@ -21,9 +21,10 @@ while($row = mysqli_fetch_array($result))
     $nombre_localizacion=$row['localizacion'];
     $nombre_sublocalizacion=$row['sublocalizacion'];
     $fecha_caducidad=$row['caducidad'];
+    $otros_nombres=$row['otros_nombres'];
     
 
-    $existencias[] = array('id'=> $id, 'nombre_producto' => $nombre_producto, 'nombre_localizacion' => $nombre_localizacion, 'nombre_sublocalizacion' => $nombre_sublocalizacion, 'fecha_caducidad' => $fecha_caducidad);
+    $existencias[] = array('id'=> $id, 'nombre_producto' => $nombre_producto, 'nombre_localizacion' => $nombre_localizacion, 'nombre_sublocalizacion' => $nombre_sublocalizacion, 'fecha_caducidad' => $fecha_caducidad, 'otros_nombres' => $otros_nombres);
 
 }
 
