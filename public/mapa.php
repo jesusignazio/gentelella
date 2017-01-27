@@ -79,9 +79,8 @@
         <script src="../vendors/moment/moment.js"></script>
         <!-- Chart.js -->
         <script src="../vendors/Chart.js/dist/Chart.bundle.js"></script>
-        <script>
-
-
+        
+        <!-- Mapa --
         </script>
     </body>
 </html>
