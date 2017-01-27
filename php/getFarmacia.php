@@ -7,7 +7,7 @@ $conexion = mysqli_connect($server, $user, $password, $db)
     or die("Ha sucedido un error inexperado en la conexion de la base de datos");
 
 //Generamos la consulta
-$sql = "SELECT e.id, p.nombre_producto AS producto, l.nombre_localizacion AS localizacion, sl.nombre_sublocalizacion AS sublocalizacion, c.fecha_caducidad AS caducidad FROM san_existencias AS e LEFT JOIN san_productos AS p ON (e.producto = p.id) LEFT JOIN san_localizaciones AS l ON (e.localizacion = l.id) LEFT JOIN san_sublocalizaciones AS sl ON (e.sublocalizacion = sl.id) LEFT JOIN san_caducidades AS c ON (e.caducidad = c.id) WHERE l.nombre_localizacion = 'Farmacia'";
+$sql = "SELECT e.id, p.nombre_producto AS producto, l.nombre_localizacion AS localizacion, sl.nombre_sublocalizacion AS sublocalizacion, c.fecha_caducidad AS caducidad, p.otros_nombres FROM san_existencias AS e LEFT JOIN san_productos AS p ON (e.producto = p.id) LEFT JOIN san_localizaciones AS l ON (e.localizacion = l.id) LEFT JOIN san_sublocalizaciones AS sl ON (e.sublocalizacion = sl.id) LEFT JOIN san_caducidades AS c ON (e.caducidad = c.id) WHERE l.nombre_localizacion = 'Farmacia'";
 mysqli_set_charset($conexion, "utf8"); //formato de datos utf8
 
 if(!$result = mysqli_query($conexion, $sql)) die();
