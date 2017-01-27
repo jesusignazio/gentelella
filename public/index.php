@@ -61,10 +61,7 @@
                                         <div class="card card-inverse card-primary text-xs-center">
                                             <div class="card-block">
                                                 <address style="color:#fff">
-                                                    <strong>Delegación Diocesana del MSC de Jerez</strong><br>
-                                                    G11611613<br>
-                                                    Plaza del Arroyo 50<br>
-                                                    11403, Jerez de la Frontera<br>
+                                                    
                                                 </address>
                                             </div>
                                         </div>
