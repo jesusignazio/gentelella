@@ -70,6 +70,10 @@
                                 <li><a href="plain_page.php">Página en blanco</a>
                                 </li>
                             </ul>
+                            <ul class="nav child_menu">
+                                <li><a href="mapa.php">Mapa</a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
