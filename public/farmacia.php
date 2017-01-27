@@ -158,6 +158,7 @@
                         });
                         $('#tabla').bootstrapTable();
                         $('#tabla').bootstrapTable('append', rows);
+                        $('#tabla').bootstrapTable('hideColumn', 'otros_nombres');
                     });
                 });
             });
