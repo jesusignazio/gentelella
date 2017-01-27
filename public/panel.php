@@ -2,7 +2,7 @@
     <div class="col-md-3 left_col menu_fixed">
         <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-                <a href="index.php"><img class="img-responsive" align="middle" id="logo" src="images/escudo.png"></a>
+                <a href="index.php"><img class="img-responsive escudo_img" align="middle" id="logo" src="images/escudo.png"></a>
             </div>
 
             <div class="clearfix"></div>
@@ -20,41 +20,54 @@
                                 </li>
                             </ul>
                         </li>
-                        <li><a><i class="fa fa-edit"></i> Libro de cuentas <span class="fa fa-chevron-down"></span></a>
+                        <li><a><i class="fa fa-calendar"></i> Actividades <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <li><a href="movimientos.php">Movimientos</a>
-                                </li>
-                                <li><a id="menu-pendientes" href="pendientes.php">Pagos pendientes<span style="float:right" id="menu-pendientes-label" class="badge orange"></span></a>
-                                </li>
-                                <li><a href="facturas.php">Facturas</a>
+                                <li><a href="actividades.php">Actividades</a>
                                 </li>
                             </ul>
                         </li>
-                        <li><a><i class="fa fa-users"></i> Miembros <span class="fa fa-chevron-down"></span></a>
+                        <li><a><i class="fa fa-medkit"></i> Farmacia <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <li><a href="castores.php">Castores</a>
+                                <li><a href="farmacia.php">Farmacia</a>
                                 </li>
-                                <li><a href="lobatos.php">Lobatos</a>
-                                </li>
-                                <li><a href="rangers.php">Rangers</a>
-                                </li>
-                                <li><a href="pioneros.php">Pioneros</a>
-                                </li>
-                                <li><a href="rutas.php">Rutas</a>
-                                </li>
-                                <li><a href="responsables.php">Responsables</a>
+                                <li><a id="menu-pendientes" href="pedidos_farmacia.php">Pedidos<span style="float:right" id="menu-pendientes-label" class="badge orange"></span></a>
                                 </li>
                             </ul>
                         </li>
-                        <li><a><i class="fa fa-tags"></i> Categorías <span class="fa fa-chevron-down"></span></a>
+                        <li><a><i class="fa fa-ambulance"></i> Ambulancias <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <li><a href="cuentas.php">Cuentas</a>
+                                <li><a href="ambulancias.php">Vista general</a></li>
+                                <li><a href="et_699.php">ET-699</a>
                                 </li>
-                                <li><a href="tarjetas.php">Tarjetas</a>
+                                <li><a href="et_719.php">ET-719</a>
                                 </li>
-                                <li><a href="categorias.php">Categorías de movimientos</a>
+                                <li><a href="et_893.php">ET-893</a>
                                 </li>
-                                <li><a href="pagos.php">Categorías de pagos</a>
+                            </ul>
+                        </li>
+                        <li><a><i class="fa fa-inbox"></i> Arcones <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="arcon_alfa.php">Alfa</a>
+                                </li>
+                                <li><a href="arcon_bravo.php">Bravo</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a><i class="fa fa-thermometer-0"></i> Vacunas <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="vacunas.php">Vacunas</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a><i class="fa fa-gavel"></i> Legislación <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="legislacion.php">Documentos</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a><i class="fa fa-cog"></i> Otros <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="plain_page.php">Página en blanco</a>
                                 </li>
                             </ul>
                         </li>
@@ -73,16 +86,6 @@
                 </div>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <img src="images/photo.png" alt="">Jesús Ignacio
-                            <span class=" fa fa-angle-down"></span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-usermenu pull-right">
-                            <li><a href="login.php"><i class="fa fa-sign-out pull-right"></i> Cerrar sesión</a>
-                            </li>
-                        </ul>
-                    </li>
 
                     <li role="presentation" class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">

@@ -1,7 +1,7 @@
 <?php
 /* Database connection information */
 $server = "localhost";
-$user = "sanitariohumanitario";
+$user = "sanitario";
 $password = "stalingrado";
-$db = "sanitariohumanitario";
+$db = "sanitario";
 ?>
