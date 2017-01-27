@@ -68,9 +68,7 @@
                         <li><a><i class="fa fa-cog"></i> Otros <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="plain_page.php">Página en blanco</a>
-                                </li>
-                            </ul>
-                            <ul class="nav child_menu">
+                                </li>              
                                 <li><a href="mapa.php">Mapa</a>
                                 </li>
                             </ul>
