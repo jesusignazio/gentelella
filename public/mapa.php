@@ -51,7 +51,7 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                    <div id="map"></div>
+                                    <div class="map" id="map"></div>
                                 </div>
                             </div>
                         </div>
