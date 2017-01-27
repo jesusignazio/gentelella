@@ -51,7 +51,7 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                    <iframe src="https://www.google.com/maps/d/embed?mid=1jFzRSoEs6np5ZR_mjCTEEKiVgis" width="640" height="480"></iframe>
+                                    <iframe src="https://www.google.com/maps/d/embed?mid=1jFzRSoEs6np5ZR_mjCTEEKiVgis" width="100%" height="650"></iframe>
                                 </div>
                             </div>
                         </div>
