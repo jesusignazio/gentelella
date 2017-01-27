@@ -9,10 +9,9 @@ $conexion = mysqli_connect($server, $user, $password, $db)
 //Obtener la fecha actual
 
 $date = date('Y/m/d', time());
-echo $date;
 
 //Generamos la consulta
-$sql = "SELECT e.id, p.nombre_producto AS producto, l.nombre_localizacion AS localizacion, sl.nombre_sublocalizacion AS sublocalizacion, c.fecha_caducidad AS caducidad FROM san_existencias AS e LEFT JOIN san_productos AS p ON (e.producto = p.id) LEFT JOIN san_localizaciones AS l ON (e.localizacion = l.id) LEFT JOIN san_sublocalizaciones AS sl ON (e.sublocalizacion = sl.id) LEFT JOIN san_caducidades AS c ON (e.caducidad = c.id) WHERE l.nombre_localizacion = 'Farmacia'";
+$sql = "SELECT e.id, p.nombre_producto AS producto, l.nombre_localizacion AS localizacion, sl.nombre_sublocalizacion AS sublocalizacion, c.fecha_caducidad AS caducidad FROM san_existencias AS e LEFT JOIN san_productos AS p ON (e.producto = p.id) LEFT JOIN san_localizaciones AS l ON (e.localizacion = l.id) LEFT JOIN san_sublocalizaciones AS sl ON (e.sublocalizacion = sl.id) LEFT JOIN san_caducidades AS c ON (e.caducidad = c.id) WHERE caducidad <'$date'";
 mysqli_set_charset($conexion, "utf8"); //formato de datos utf8
 
 if(!$result = mysqli_query($conexion, $sql)) die();
