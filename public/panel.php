@@ -53,6 +53,12 @@
                                 </li>
                             </ul>
                         </li>
+                        <li><a><i class="fa fa-file-text-o"></i> Informes <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="caducados.php">Caducados</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li><a><i class="fa fa-thermometer-0"></i> Vacunas <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="vacunas.php">Vacunas</a>
