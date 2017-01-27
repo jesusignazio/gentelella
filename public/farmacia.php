@@ -61,6 +61,7 @@
                                             </button>    
                                             </div>
                                         </div>
+                                    </div>
                                     <table id="tabla" 
                                            class="table table-striped table-bordered dt-responsive nowrap" 
                                            data-sort-name="nombre" 
