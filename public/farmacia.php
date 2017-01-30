@@ -171,7 +171,11 @@
             $('#tabla').bootstrapTable({
                 onClickRow: function (row, $element) {
                     var data = JSON.stringify(row);
-                    alert(row.id_producto);
+                    var json = JSON.parse(data);
+                    alert(json.id_producto);
+                    alert(data);
+                    alert(json);
+                    alert(row);
                 }
             }
                                                   );
