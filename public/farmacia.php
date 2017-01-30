@@ -157,7 +157,7 @@
                             caducidad: fecha_caducidad, 
                             cantidad: "10",
                             otros_nombres: otros_nombres,
-                            id: id_producto,
+                            id_producto: id_producto,
                         });
                         $('#tabla').bootstrapTable();
                         $('#tabla').bootstrapTable('append', rows);
