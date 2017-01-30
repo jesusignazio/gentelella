@@ -162,6 +162,7 @@
                         $('#tabla').bootstrapTable();
                         $('#tabla').bootstrapTable('append', rows);
                         $('#tabla').bootstrapTable('hideColumn', 'otros_nombres');
+                        $('#tabla').bootstrapTable('hideColumn', 'id');
                     });
                 });
             });
@@ -169,7 +170,8 @@
         <script>
             $('#tabla').bootstrapTable({
                 onClickRow: function (row, $element) {
-                    alert('You click like action, row: ' + JSON.stringify(row));
+                    var parsedData = JSON.parse(row);
+                    alert(parsedData.id_producto);
                 }
             }
                                                   );
