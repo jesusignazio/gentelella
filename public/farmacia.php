@@ -166,7 +166,7 @@
         <script>
             $('#tabla').bootstrapTable({
                 onClickRow: function (row, $element) {
-                    window.location.href = "ver_producto_farmacia.php";
+                    alert('You click like action, row: ' + JSON.stringify(row));
                 }
             }
                                                   );
