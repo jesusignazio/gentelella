@@ -163,5 +163,14 @@
                 });
             });
         </script>
+        <script>
+            $('#tabla').bootstrapTable({
+                onClickRow: function (row, $element) {
+                    window.location.href = $(this).data('ver_producto_farmacia.php');
+                }
+            }
+                                                  );
+        </script>
+
     </body>
 </html>
