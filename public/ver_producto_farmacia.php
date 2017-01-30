@@ -129,7 +129,7 @@
         <!-- Populate tabla -->
         <script>
             $(document).ready(function(){
-                var url="../php/getProductoFarmacia.php?id='1'";
+                var url="../php/getProductoFarmacia.php?id=1";
                 $.getJSON(url,function(movimientos){
                     $.each(movimientos, function(i,movimiento){
                         var rows = [];
