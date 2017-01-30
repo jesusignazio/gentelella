@@ -6,7 +6,8 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        
+        <?php $id = $_GET["id"]; ?>
         <?php include 'title.php'; ?>
 
         <!-- Bootstrap -->
@@ -128,7 +129,7 @@
         <!-- Populate tabla -->
         <script>
             $(document).ready(function(){
-                var url="../php/getFarmacia.php";
+                var url="../php/getProductoFarmacia.php?id='$id'";
                 $.getJSON(url,function(movimientos){
                     $.each(movimientos, function(i,movimiento){
                         var rows = [];
