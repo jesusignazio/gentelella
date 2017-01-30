@@ -170,7 +170,8 @@
         <script>
             $('#tabla').bootstrapTable({
                 onClickRow: function (row, $element) {
-                    var parsedData = JSON.parse(row);
+                    var data = JSON.stringify(row)
+                    var parsedData = JSON.parse(data);
                     alert(parsedData.id_producto);
                 }
             }
