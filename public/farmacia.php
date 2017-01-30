@@ -84,7 +84,8 @@
                                                 <th data-sortable="true" data-field="caducidad" data-align="center">Caducidad</th>
                                                 <th data-sortable="true" data-field="cantidad" data-align="center">Cantidad</th>
                                                 <th data-sortable="true" data-field="sublocalizacion" data-align="center">Localización</th>
-                                                <th data-sortable="falsa" data-field="otros_nombres" data-align="center">Otros nombres</th>
+                                                <th data-sortable="false" data-field="otros_nombres" data-align="center">Otros nombres</th>
+                                                <th data-sortable="false" data-field="id" data-align="center">ID</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -136,6 +137,7 @@
                         var nombre_producto = movimiento.nombre_producto;
                         var nombre_sublocalizacion = movimiento.nombre_sublocalizacion;
                         var otros_nombres = movimiento.otros_nombres;
+                        var id_producto = movimiento.id_producto;
 
                         todaysDate = new Date();
                         todaysDate.setHours(0, 0, 0, 0);
@@ -155,6 +157,7 @@
                             caducidad: fecha_caducidad, 
                             cantidad: "10",
                             otros_nombres: otros_nombres,
+                            id: id_producto,
                         });
                         $('#tabla').bootstrapTable();
                         $('#tabla').bootstrapTable('append', rows);
