@@ -85,7 +85,7 @@
                                                 <th data-sortable="true" data-field="cantidad" data-align="center">Cantidad</th>
                                                 <th data-sortable="true" data-field="sublocalizacion" data-align="center">Localización</th>
                                                 <th data-sortable="false" data-field="otros_nombres" data-align="center">Otros nombres</th>
-                                                <th data-sortable="false" data-field="id" data-align="center">ID</th>
+                                                <th data-sortable="false" data-field="id_producto" data-align="center">ID</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -133,7 +133,7 @@
                 $.getJSON(url,function(movimientos){
                     $.each(movimientos, function(i,movimiento){
                         var rows = [];
-                        var id = movimiento.id;
+                        var id_existencia = movimiento.id_existencia;
                         var nombre_producto = movimiento.nombre_producto;
                         var nombre_sublocalizacion = movimiento.nombre_sublocalizacion;
                         var otros_nombres = movimiento.otros_nombres;
@@ -162,7 +162,7 @@
                         $('#tabla').bootstrapTable();
                         $('#tabla').bootstrapTable('append', rows);
                         $('#tabla').bootstrapTable('hideColumn', 'otros_nombres');
-                        $('#tabla').bootstrapTable('hideColumn', 'id');
+                        $('#tabla').bootstrapTable('hideColumn', 'id_producto');
                     });
                 });
             });
