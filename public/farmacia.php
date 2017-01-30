@@ -172,10 +172,9 @@
                 onClickRow: function (row, $element) {
                     var data = JSON.stringify(row);
                     var json = JSON.parse(data);
-                    alert(json.id_producto);
-                    alert(data);
-                    alert(json);
-                    alert(row);
+                    var id = json.id_producto;
+                    location.href = "ver_producto_farmacia.php?id=" + id;
+                    
                 }
             }
                                                   );
