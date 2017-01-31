@@ -170,14 +170,7 @@
         </script>
         <script>
             function rowStyle(row, index) {
-                var classes = ['danger'];
-
-                $.each(this.columns, function(i, column) {
-                        return {
-                            classes: classes[0]
-                        };
-                })
-                return {};
+                return 'danger';
             }
         </script>
 
