@@ -76,7 +76,7 @@
                                            data-show-export="true"
                                            data-pagination="true"
                                            data-export-types="['excel']"
-                                           data-filter-control="true"
+                                           data-filter-control="false"
 
                                            >
                                         <thead>
