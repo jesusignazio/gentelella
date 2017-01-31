@@ -174,7 +174,7 @@
 
                 $.each(this.columns, function(i, column) {
                         return {
-                            classes: classes[1]
+                            classes: classes[0]
                         };
                 })
                 return {};
