@@ -169,9 +169,30 @@
             });
         </script>
         <script>
-            function rowStyle(row, index) {
-                return 'danger';
+            
+                function rowStyle(row, index) {
+                var classes = ['success', 'danger'];
+
+                $.each(this.columns, function(i, column) {
+
+                    if (column.id == 'ingreso') {
+                        return {
+                            classes: classes[1]
+                        };
+                    }
+
+                    else { 
+                        return {
+                            classes: classes[0]
+                        }
+                    }
+
+
+                })
+                return {};
             }
+
+            
         </script>
 
         <script>
