@@ -169,6 +169,19 @@
             });
         </script>
         <script>
+            function rowStyle(row, index) {
+                var classes = ['danger'];
+
+                $.each(this.columns, function(i, column) {
+                        return {
+                            classes: classes[1]
+                        };
+                })
+                return {};
+            }
+        </script>
+
+        <script>
             $('#tabla').bootstrapTable({
                 onClickRow: function (row, $element) {
                     var data = JSON.stringify(row);
