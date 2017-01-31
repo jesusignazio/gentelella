@@ -138,6 +138,7 @@
                         var nombre_sublocalizacion = movimiento.nombre_sublocalizacion;
                         var otros_nombres = movimiento.otros_nombres;
                         var id_producto = movimiento.id_producto;
+                        var cantidad = movimiento.cantidad;
 
                         todaysDate = new Date();
                         todaysDate.setHours(0, 0, 0, 0);
@@ -155,7 +156,7 @@
                             nombre: nombre_producto,
                             sublocalizacion: nombre_sublocalizacion,
                             caducidad: fecha_caducidad, 
-                            cantidad: "10",
+                            cantidad: cantidad,
                             otros_nombres: otros_nombres,
                             id_producto: id_producto,
                         });
