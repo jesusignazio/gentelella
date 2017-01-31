@@ -176,13 +176,12 @@
                 todaysDate = new Date();                        
                 todaysDate.setHours(0, 0, 0, 0);                        
                 movimientoDate = new Date(fecha);
-                alert(fecha);
-                alert(data);
-                alert(json);
+                alert(row.data('caducidad'));
                 
                 return {                
                     classes: classes[index / 2]            
                 };
+                
         return {};
     }
            
