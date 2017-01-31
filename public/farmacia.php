@@ -80,7 +80,7 @@
                                            >
                                         <thead>
                                             <tr> 
-                                                <th data-sortable="true" data-field="nombre" data-align="left" data-filter-control="input">Nombre</th>
+                                                <th data-sortable="true" data-field="nombre" data-align="left">Nombre</th>
                                                 <th data-sortable="true" data-field="caducidad" data-align="center">Caducidad</th>
                                                 <th data-sortable="true" data-field="cantidad" data-align="center">Cantidad</th>
                                                 <th data-sortable="true" data-field="sublocalizacion" data-align="center">Localización</th>
