@@ -81,7 +81,7 @@
                                            >
                                         <thead>
                                             <tr> 
-                                                <th data-sortable="true" data-searchable="true" data-field="nombre" data-align="left" data-filter-control="input">Nombre</th>
+                                                <th data-sortable="true" data-field="nombre" data-align="left" data-filter-control="input">Nombre</th>
                                                 <th data-sortable="true" data-field="caducidad" data-align="center">Caducidad</th>
                                                 <th data-sortable="true" data-field="cantidad" data-align="center">Cantidad</th>
                                                 <th data-sortable="true" data-field="sublocalizacion" data-align="center">Localización</th>
@@ -138,6 +138,7 @@
                         var nombre_producto = movimiento.nombre_producto;
                         var nombre_sublocalizacion = movimiento.nombre_sublocalizacion;
                         var otros_nombres = movimiento.otros_nombres;
+                        var cantidad = movimiento.cantidad;
 
                         todaysDate = new Date();
                         todaysDate.setHours(0, 0, 0, 0);
@@ -155,7 +156,7 @@
                             nombre: nombre_producto,
                             sublocalizacion: nombre_sublocalizacion,
                             caducidad: fecha_caducidad, 
-                            cantidad: "10",
+                            cantidad: cantidad,
                             otros_nombres: otros_nombres,
                         });
                         $('#tabla').bootstrapTable();
