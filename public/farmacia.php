@@ -177,6 +177,9 @@
                 todaysDate.setHours(0, 0, 0, 0);                        
                 movimientoDate = new Date(fecha);
                 alert(fecha);
+                alert(data);
+                alert(json);
+                
                 return {                
                     classes: classes[index / 2]            
                 };
