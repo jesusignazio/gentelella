@@ -169,30 +169,17 @@
             });
         </script>
         <script>
-            
-                function rowStyle(row, index) {
-                var classes = ['success', 'danger'];
+            function rowStyle(row, index) {
+        var classes = ['active', 'success', 'info', 'warning', 'danger'];
 
-                $.each(this.columns, function(i, column) {
-
-                    if (column.id == 'ingreso') {
-                        return {
-                            classes: classes[1]
-                        };
-                    }
-
-                    else { 
-                        return {
-                            classes: classes[0]
-                        }
-                    }
-
-
-                })
-                return {};
-            }
-
-            
+        if (index % 2 === 0 && index / 2 < classes.length) {
+            return {
+                classes: classes[index / 2]
+            };
+        }
+        return {};
+    }
+           
         </script>
 
         <script>
