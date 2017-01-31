@@ -143,12 +143,11 @@
                         todaysDate = new Date();
                         todaysDate.setHours(0, 0, 0, 0);
                         movimientoDate = new Date(movimiento.fecha_caducidad)
-                        if (movimientoDate <= todaysDate){
+                        /**if (movimientoDate <= todaysDate){
                             var fecha_caducidad = "<i class=\"fa fa-warning\"></i>   " + movimiento.fecha_caducidad + "   <i class=\"fa fa-warning\"></i>";
-                        }
-                        else{
-                            var fecha_caducidad = movimiento.fecha_caducidad;
-                        }
+                        }**/
+                        var fecha_caducidad = movimiento.fecha_caducidad;
+                        
 
 
 
@@ -170,9 +169,17 @@
         </script>
         <script>
             function rowStyle(row, index) {
-        var classes = ['active', 'success', 'info', 'warning', 'danger'];
-
-        alert(row.fecha_caducidad);
+                var data = JSON.stringify(row);                
+                var json = JSON.parse(data);                
+                var fecha = json.fecha_caducidad;
+                var classes = ['active', 'success', 'info', 'warning', 'danger'];
+                todaysDate = new Date();                        
+                todaysDate.setHours(0, 0, 0, 0);                        
+                movimientoDate = new Date(fecha);
+                alert(fecha);
+                return {                
+                    classes: classes[index / 2]            
+                };
         return {};
     }
            
