@@ -43,10 +43,49 @@
                     <div class="clearfix"></div>
 
                     <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-2 col-sm-2 col-xs-2">
                             <div class="x_panel">
                                 <div class="x_title">
                                     <h2>Ambulancia ET-699</h2>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <img src="images/699.jpg" style="width: 100%; height: 100%"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Últimas reposiciones</h2>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    Add content to the page ...
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="col-md-2 col-sm-2 col-xs-2">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Caduca</h2>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    Add content to the page ...
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Existencias</h2>
 
                                     <div class="clearfix"></div>
                                 </div>
@@ -63,7 +102,19 @@
             <?php include 'footer.php'; ?>
         </div>
 
-
+        <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyAEdqOASVHZzHUgOlqJNHx8zQEVFCWYy8E",
+                authDomain: "sanitariohumanitario.firebaseapp.com",
+                databaseURL: "https://sanitariohumanitario.firebaseio.com",
+                projectId: "sanitariohumanitario",
+                storageBucket: "sanitariohumanitario.appspot.com",
+                messagingSenderId: "166629628149"
+            };
+            firebase.initializeApp(config);
+        </script>
         <!-- jQuery -->
         <script src="../vendors/jquery/dist/jquery.min.js"></script>
         <!-- Bootstrap -->

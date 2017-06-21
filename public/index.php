@@ -18,6 +18,7 @@
         <!-- Custom Theme Style -->
         <link href="../build/css/custom.min.css" rel="stylesheet">
         <link href="css/custom.css" rel="stylesheet">
+        <link rel='stylesheet' href='../vendors/fullcalendar/dist/fullcalendar.css' />
 
     </head>
 
@@ -46,11 +47,11 @@
                         <div class="col-sm-9">
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2><i class="fa fa-line-chart"></i> Evolución del saldo</h2>
+                                    <h2><i class="fa fa-calendar"></i> Calendario</h2>
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                    <canvas style="height:75%;" id="canvas"></canvas>
+                                    <div id="calendar"></div>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +62,7 @@
                                         <div class="card card-inverse card-primary text-xs-center">
                                             <div class="card-block">
                                                 <address style="color:#fff">
-                                                    
+
                                                 </address>
                                             </div>
                                         </div>
@@ -91,6 +92,20 @@
         </div>
 
 
+
+        <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyAEdqOASVHZzHUgOlqJNHx8zQEVFCWYy8E",
+                authDomain: "sanitariohumanitario.firebaseapp.com",
+                databaseURL: "https://sanitariohumanitario.firebaseio.com",
+                projectId: "sanitariohumanitario",
+                storageBucket: "sanitariohumanitario.appspot.com",
+                messagingSenderId: "166629628149"
+            };
+            firebase.initializeApp(config);
+        </script>
         <!-- jQuery -->
         <script src="../vendors/jquery/dist/jquery.min.js"></script>
         <!-- Bootstrap -->
@@ -106,9 +121,30 @@
         <script src="../vendors/moment/moment.js"></script>
         <!-- Chart.js -->
         <script src="../vendors/Chart.js/dist/Chart.bundle.js"></script>
+
+
+        <!--Calendar-->
+        <script src='../vendors/moment/moment.js'></script>
+        <script src='../vendors/fullcalendar/dist/fullcalendar.js'></script>
+        <script src="../vendors/fullcalendar/dist/locale/es.js"></script>
+        <script src="../vendors/fullcalendar/dist/gcal.js"></script>
         <script>
+            $(document).ready(function() {
 
+                // page is now ready, initialize the calendar...
 
+                $('#calendar').fullCalendar({
+                    googleCalendarApiKey: 'AIzaSyAaKkJ30FXOc1Q4LQmzlMYEhsB_8DRrOeQ',
+                    locale: 'es',
+                    evens: {
+                        googleCalendarId: '1hnbgdnsf9g4f8pa9ra7e6ds6k@group.calendar.google.com'
+                    }
+
+                })
+
+            });
         </script>
+
+
     </body>
 </html>

@@ -64,6 +64,19 @@
         </div>
 
 
+        <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyAEdqOASVHZzHUgOlqJNHx8zQEVFCWYy8E",
+                authDomain: "sanitariohumanitario.firebaseapp.com",
+                databaseURL: "https://sanitariohumanitario.firebaseio.com",
+                projectId: "sanitariohumanitario",
+                storageBucket: "sanitariohumanitario.appspot.com",
+                messagingSenderId: "166629628149"
+            };
+            firebase.initializeApp(config);
+        </script>
         <!-- jQuery -->
         <script src="../vendors/jquery/dist/jquery.min.js"></script>
         <!-- Bootstrap -->

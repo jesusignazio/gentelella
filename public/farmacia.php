@@ -103,7 +103,19 @@
             <?php include 'footer.php'; ?>
         </div>
 
-
+        <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyAEdqOASVHZzHUgOlqJNHx8zQEVFCWYy8E",
+                authDomain: "sanitariohumanitario.firebaseapp.com",
+                databaseURL: "https://sanitariohumanitario.firebaseio.com",
+                projectId: "sanitariohumanitario",
+                storageBucket: "sanitariohumanitario.appspot.com",
+                messagingSenderId: "166629628149"
+            };
+            firebase.initializeApp(config);
+        </script>
         <!-- jQuery -->
         <script src="../vendors/jquery/dist/jquery.min.js"></script>
         <!-- Bootstrap -->
@@ -142,12 +154,12 @@
 
                         todaysDate = new Date();
                         todaysDate.setHours(0, 0, 0, 0);
-                        movimientoDate = new Date(movimiento.fecha_caducidad)
+                        movimientoDate = new Date(movimiento.fecha_caducidad);
                         /**if (movimientoDate <= todaysDate){
                             var fecha_caducidad = "<i class=\"fa fa-warning\"></i>   " + movimiento.fecha_caducidad + "   <i class=\"fa fa-warning\"></i>";
                         }**/
                         var fecha_caducidad = movimiento.fecha_caducidad;
-                        
+
 
 
 
@@ -171,20 +183,20 @@
             function rowStyle(row, index) {
                 var data = JSON.stringify(row);                
                 var json = JSON.parse(data);                
-                var fecha = json.fecha_caducidad;
+                var fecha = json.caducidad;
                 var classes = ['active', 'success', 'info', 'warning', 'danger'];
                 todaysDate = new Date();                        
                 todaysDate.setHours(0, 0, 0, 0);                        
                 movimientoDate = new Date(fecha);
-                alert(row.data('caducidad'));
-                
-                return {                
-                    classes: classes[index / 2]            
-                };
-                
-        return {};
-    }
-           
+                if (movimientoDate < todaysDate){
+                    return {
+                        classes: 'danger'
+                    }
+                }
+
+                return {};
+            }
+
         </script>
 
         <script>
@@ -194,10 +206,10 @@
                     var json = JSON.parse(data);
                     var id = json.id_producto;
                     location.href = "ver_producto_farmacia.php?id=" + id;
-                    
+
                 }
             }
-                                                  );
+                                      );
         </script>
 
     </body>
