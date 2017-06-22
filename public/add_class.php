@@ -18,6 +18,7 @@
         <!-- Custom Theme Style -->
         <link href="../build/css/custom.min.css" rel="stylesheet">
         <link href="css/custom.css" rel="stylesheet">
+        <link href="../vendors/pnotify/dist/pnotify.css" media="all" rel="stylesheet" type="text/css" />
 
     </head>
 
@@ -53,24 +54,22 @@
                                 <div class="x_content">
                                     <form>
                                         <div class="form-group">
-                                            <label for="nombre_raiem">Nombre RAIEM:</label>
-                                            <input type="email" class="form-control" id="email">
+                                            <label>Nombre RAIEM:</label>
+                                            <input id="nombre_raiem" type="text" class="form-control">
                                         </div>
                                         <div class="form-group">
-                                            <label for="pwd">Otros Nombres:</label>
+                                            <label>Otros Nombres:</label>
                                             <textarea class="form-control" rows="5" id="otros_nombres"></textarea>
                                         </div>
                                         <div>
-                                            <label class="radio-inline"><input type="radio" name="tiporadio">Inventariable</label>
-                                            <label class="radio-inline"><input type="radio" name="tiporadio">Fungible</label>
+                                            <label class="radio-inline"><input type="radio" id="radioinventariable">Inventariable</label>
+                                            <label class="radio-inline"><input type="radio" id="radiofungible">Fungible</label>
                                         </div>
                                         <div style="margin-top:15px">
-                                            <button id="submit" type="submit" class="btn btn-default">Añadir</button>
+                                            <button id="submit" class="btn btn-default">Añadir</button>
                                         </div>
                                     </form>
-                                    <!Nombre RAIEM=>
-                                    <!Otros nombres=>
-                                    <!Inventariable/Fungible=>
+
                                 </div>
                             </div>
                         </div>
@@ -86,10 +85,8 @@
         <script src="../vendors/jquery/dist/jquery.min.js"></script>
         <!-- Bootstrap -->
         <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-        <!-- FastClick -->
-        <script src="../vendors/fastclick/lib/fastclick.js"></script>
-        <!-- NProgress -->
-        <script src="../vendors/nprogress/nprogress.js"></script>
+
+
 
         <!-- Custom Theme Scripts -->
         <script src="../build/js/custom.min.js"></script>
@@ -97,7 +94,8 @@
         <script src="../vendors/moment/moment.js"></script>
         <!-- Chart.js -->
         <script src="../vendors/Chart.js/dist/Chart.bundle.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+        <script src="../vendors/firebase/firebase.js"></script>
+        <script src="../vendors/pnotify/dist/pnotify.js"></script>
         <script>
             // Initialize Firebase
             var config = {
@@ -109,7 +107,50 @@
                 messagingSenderId: "166629628149"
             };
             firebase.initializeApp(config);
+            console.log(firebase);
+
+            var database = firebase.database();
+            var ref = database.ref("clases");
+
+            $('#submit').on('click', function(event){
+                PNotify.prototype.options.styling = "fontawesome";
+                event.preventDefault();
+                if ($('#radiofungible').is(":checked")) {
+                    var tipo = 'fungible';
+                    pushData();
+                }
+                else if ($('#radioinventariable').is(":checked")) {
+                    var tipo = 'inventariable';
+                    pushData();
+                }
+                else {
+                    new PNotify({
+                        title: 'Error',
+                        text: 'No has elegido tipo (inventariable/fungible).',
+                        type: 'error'
+                    });
+                }
+                function pushData(){
+                    var data = {
+                        nombre_raiem: $('#nombre_raiem').val(),
+                        tipo,
+                        otros_nombres: $('#otros_nombres').val()
+                    }
+                    ref.push(data);
+                    new PNotify({
+                        title: 'Listo',
+                        text: 'Registro añadido',
+                        type: 'success'
+                    });
+                }
+
+            });
         </script>
-        <script src="js/js_add_class.js"/>
+        <script>
+            $(document).ready(function (){
+                $('.ui-pnotify').remove();
+            });
+        </script>
+
     </body>
 </html>
