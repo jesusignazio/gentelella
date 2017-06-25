@@ -46,7 +46,7 @@
                         <div class="col-md-2 col-sm-2 col-xs-2">
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2>Ambulancia ET-699</h2>
+                                    <h2>Vista general</h2>
 
                                     <div class="clearfix"></div>
                                 </div>
@@ -55,6 +55,26 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Acciones</h2>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                     <div class="row">
+                                <button class="success">Añadir gasto de material sanitario</button>
+                                     <button class="success">Añadir aporte de material sanitario</button>  
+                                         </div>     
+                                    <div class="row">
+                                     <button class="success">Niveles de oxígeno</button>
+                                        
+                                </div>
+                                    </div>
+                            </div>
+                        </div>
+                        
                     </div>
                     <div class="row">
                         <div class="col-md-4 col-sm-4 col-xs-4">
