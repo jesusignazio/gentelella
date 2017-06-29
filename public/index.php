@@ -51,21 +51,20 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                    <div id="calendar"></div>
+                                    
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3" >
-                                <div class="x_panel" style="background:#0275D8" >
+                            <div class="col-sm-3" style="offset-sm-8">
+                                <div class="x_panel">
+                                    <div class="x_title">   
+                                        <h2>Titulo  </h2>
+                                        
+                                                                            <div class="clearfix"></div>
+                                      </div>
                                     <div class="x_content">
-                                        <div class="card card-inverse card-primary text-xs-center">
-                                            <div class="card-block">
-                                                <address style="color:#fff">
-
-                                                </address>
-                                            </div>
-                                        </div>
+                                    
                                     </div>
                                 </div>
                             </div>
@@ -123,27 +122,6 @@
         <script src="../vendors/Chart.js/dist/Chart.bundle.js"></script>
 
 
-        <!--Calendar-->
-        <script src='../vendors/moment/moment.js'></script>
-        <script src='../vendors/fullcalendar/dist/fullcalendar.js'></script>
-        <script src="../vendors/fullcalendar/dist/locale/es.js"></script>
-        <script src="../vendors/fullcalendar/dist/gcal.js"></script>
-        <script>
-            $(document).ready(function() {
-
-                // page is now ready, initialize the calendar...
-
-                $('#calendar').fullCalendar({
-                    googleCalendarApiKey: 'AIzaSyAaKkJ30FXOc1Q4LQmzlMYEhsB_8DRrOeQ',
-                    locale: 'es',
-                    evens: {
-                        googleCalendarId: '1hnbgdnsf9g4f8pa9ra7e6ds6k@group.calendar.google.com'
-                    }
-
-                })
-
-            });
-        </script>
 
 
     </body>
