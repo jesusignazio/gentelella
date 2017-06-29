@@ -69,11 +69,11 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-4 col-sm-4 col-xs-4">
+                    
+                        <div class="col-md-2 col-sm-2 col-xs-2">
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2>Caduca o por debajo del nivel</h2>
+                                    <h2>Caduca</h2>
 
                                     <div class="clearfix"></div>
                                 </div>
@@ -82,31 +82,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-4 col-sm-4 col-xs-4">
-                            <div class="x_panel">
-                                <div class="x_title">
-                                    <h2>Localizaciones</h2>
-
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="x_content">
-                                    <p>Mochila circulatorio</p>
-                                    <p>Mochila respiratorio</p>
-                                    <p>Mochila pediátrica</p>
-                                    <p>Ampulario</p>
-                                    <p>Cajón 1</p>
-                                    <p>Cajón 2</p>
-                                    <p>Cajón 3</p>
-                                    <p>Cajón 4</p>
-                                    <p>Cajón 5</p>
-                                    <p>Cajón 6</p>
-                                    <p>Cajón 7</p>
-                                    <p>Cajón 8</p>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="x_panel">
                                 <div class="x_title">
@@ -128,27 +103,6 @@
         </div>
 
         <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
-        <script> //TODO borrar
-            function añadirRegistro(){
-                var database = firebase.database();
-                var ref = database.ref("ambulancias").child("et_699").child("localizaciones").child("ampulario").child("existe").child("-KnErcpZFZkNyEneJKOX");
-                var data = {
-                    caducidad: 20171030,
-                    cantidad: 2
-                }
-                ref.push(data);
-            }
-            
-            function estaCaducado(referencia){
-                referencia.
-            }
-            
-            function porDebajoDeNivel(referencia){
-                
-            }
-        
-
-        </script>
         <script>
             // Initialize Firebase
             var config = {
@@ -161,7 +115,6 @@
             };
             firebase.initializeApp(config);
         </script>
-
         <!-- jQuery -->
         <script src="../vendors/jquery/dist/jquery.min.js"></script>
         <!-- Bootstrap -->
