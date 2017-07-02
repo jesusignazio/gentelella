@@ -65,15 +65,15 @@
                                 </li>
                             </ul>
                         </li>
-                        <li><a><i class="fa fa-gavel"></i> Legislación <span class="fa fa-chevron-down"></span></a>
+                        <li><a><i class="fa fa-heartbeat"></i> Electromedicina <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <li><a href="legislacion.php">Documentos</a>
+                                <li><a href="aparatos_electromedicina.php">Aparatos</a>
                                 </li>
                             </ul>
                         </li>
-                        <li><a><i class="fa fa-cog"></i> Otros <span class="fa fa-chevron-down"></span></a>
+                        <li><a><i class="fa fa-cog"></i> Ajustes <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <li><a href="add_class.php">Añadir clase</a>
+                                <li><a href="clases.php">Clases</a>
                                 </li> 
                                 <li><a href="plain_page.php">Página en blanco</a>
                                 </li>              
