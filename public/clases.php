@@ -111,6 +111,7 @@
                                         <div>
                                             <label class="radio-inline"><input type="radio" id="radioinventariable">Inventariable</label>
                                             <label class="radio-inline"><input type="radio" id="radiofungible">Fungible</label>
+                                            <label class="radio-inline"><input type="radio" id="radiomedicamento">Medicamento</label>
                                         </div>
                                         <div style="margin-top:15px">
                                             <button id="submit" class="btn btn-default">Añadir</button>
@@ -179,6 +180,11 @@
                     var tipo = 'Inventariable';
                     pushData();
                 }
+                else if($('#radiomedicamento').is(":checked")) {
+                    var tipo = 'Medicamento';
+                    pushData();
+                }
+                
                 else {
                     new PNotify({
                         title: 'Error',
@@ -192,6 +198,7 @@
                         tipo,
                         otros_nombres: $('#otros_nombres').val()
                     }
+                    $('#tabla-clases').bootstrapTable('removeAll');
                     ref.push(data);
                     new PNotify({
                         title: 'Listo',

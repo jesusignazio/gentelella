@@ -363,9 +363,7 @@
                                 otros_nombres: otros_nombres,
                                 key: k
                             }
-
                         });
-
                     }
                 }
 
@@ -374,6 +372,7 @@
                     console.log(err);
                 }
             }
+
             function getRevisiones(){
                 var database = firebase.database();
                 var ref = database.ref("ambulancias/et_699/revisiones_electromedicina");
@@ -381,7 +380,6 @@
                 var ultima_revision;
 
                 ref.on('value', gotData, errData);
-
 
                 function gotData(data){
                     var entradas = data.val();
@@ -412,10 +410,7 @@
                             moment(fecha).format("DD-MM-YYYY") +
                             '</li>';
 
-
                         lista.append(nuevaLinea);
-
-
 
                     }
                 }
@@ -426,13 +421,8 @@
                 }
             }
 
-
-
             getTablaTotal();
             getRevisiones();
-
-
-
         </script>
     </body>
 </html>
