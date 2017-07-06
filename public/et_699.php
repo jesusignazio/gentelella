@@ -19,6 +19,8 @@
         <link href="../build/css/custom.min.css" rel="stylesheet">
         <link href="css/custom.css" rel="stylesheet">
         <link rel="stylesheet" href="../vendors/bootstrap-table/src/bootstrap-table.css">
+        <link href="../vendors/pnotify/dist/pnotify.css" media="all" rel="stylesheet" type="text/css" />
+        <link href="../vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css">
 
     </head>
 
@@ -79,7 +81,8 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                    <div class="row">
+
+                                    <div class="container">
                                         <table id="tabla-total" data-toggle="table"
                                                class="table table-striped table-bordered dt-responsive nowrap" 
                                                data-sort-name="producto" 
@@ -94,8 +97,9 @@
                                                data-export-types="['excel', 'pdf']"
                                                data-filter-control="true">
                                             <thead>
+
                                                 <tr>
-                                                    <th data-sortable="true" data-filter-control="select" data-field="nombre_raiem">Nombre</th>
+                                                    <th data-sortable="true" data-field="nombre_raiem">Nombre</th>
                                                     <th data-align="center" data-sortable="true" data-filter-control="select" data-field="localizacion">Localización</th>
                                                     <th data-editable="true" data-sortable="true" data-field="caducidad">Caducidad</th>
                                                     <th data-editable="true" data-editable="true" data-field="cantidad">Cantidad</th>
@@ -104,12 +108,14 @@
                                                     <th data-editable="true" data-visible="false" data-field="otros_nombres">Otros nombres</th>
                                                     <th data-align="center" data-formatter="TableActions">Acciones</th>
                                                     <th data-visible="false" data-field="key">Clave</th>
+                                                    <th data-visible="false" data-field="clase">Clave clase</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
 
                                             </tbody>
                                         </table>
+                                        <button id="añadirRegistro" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ModalAñadirRegistro"><span class="fa fa-plus"></span> Añadir</button>
                                     </div>
                                 </div>
                             </div>
@@ -139,12 +145,8 @@
                                 </div>
                                 <div class="x_content">
                                     <ul id="lista-revisiones" class="list-group">
-
-
-
-
                                     </ul>
-                                    <button class="btn btn-default btn-xs pull-right">Añadir</button>
+                                    <button class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#ModalAñadirRevisionElectromedicina"><span class="fa fa-plus"></span>  Añadir</button>
                                 </div>
                             </div>
                         </div>
@@ -200,10 +202,17 @@
         <script> //TODO borrar
             function añadirRegistro(){
                 var database = firebase.database();
-                var ref = database.ref("ambulancias").child("et_699").child("localizaciones").child("ampulario").child("existe").child("-KnErcpZFZkNyEneJKOX");
+                var ref = database.ref("ambulancias").child("et_699").child("existe");
                 var data = {
-                    caducidad: 20171030,
-                    cantidad: 2
+                    caducidad : "18/04/2017",
+                    cantidad : "12",
+                    clase : "-KnErcpZFZkNyEneJKOX",
+                    key : "-KnoL6H9XctKPCNBAP_",
+                    localizacion : "Puerta ampulario",
+                    nivel : 1,
+                    nombre_raiem : "Midazolam 50 mg",
+                    observaciones : " ",
+                    otros_nombres : "Midazolam, Dormicum"
                 }
                 ref.push(data);
             };
@@ -234,6 +243,7 @@
         <!-- Custom Theme Scripts -->
         <script src="../build/js/custom.min.js"></script>
         <script src="../vendors/moment/moment.js"></script>
+        <script src="../vendors/moment/locale/es.js"></script>
         <!-- Chart.js -->
         <script src="../vendors/Chart.js/dist/Chart.bundle.js"></script>
 
@@ -247,17 +257,23 @@
         <script src="../vendors/bootstrap-table/src/locale/bootstrap-table-es-ES.js"></script>
         <script src="../vendors/jspdf/dist/jspdf.min.js"></script>
         <script src="../vendors/jspdf-autotable/dist/jspdf.plugin.autotable.js"></script>
+        <script src="../vendors/pnotify/dist/pnotify.js"></script>
+        <script src="../vendors/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
 
 
         <script>
 
-            function TableActions (value, row, index) {
-                return [
+            var arrayClasesKey = [];
+            var arrayClasesNombre = [];
 
-                    '<a class="danger remove" href="javascript:void(0)" data-visitorserial="'+1+'" data-visitornames="'+2+'" data-visitorid="'+3+'" data-toggle="modal" data-target="#VisitorDelete" title="Remove">',
+            function TableActions (value, row, index) {
+
+                return [
+                    '<a class="danger remove" data-id="' + row.key + '" data-toggle="modal" data-target="#ModalEliminar" title="Remove">',
                     '<i class="glyphicon glyphicon-remove red"></i>',
                     '</a>'
                 ].join('');
+
             }
 
             function getLabelLocalizacion(string){
@@ -324,7 +340,8 @@
                         caducidad: oldValue.caducidad,
                         cantidad: oldValue.cantidad,
                         observaciones: oldValue.observaciones,
-                        otros_nombres: oldValue.otros_nombres
+                        otros_nombres: oldValue.otros_nombres,
+                        clase: oldValue.clase
                     }                   
 
                     ref.child(oldValue.key).update(oldValue);                
@@ -350,18 +367,21 @@
                         var localizacion = entradas[k].localizacion;
                         var observaciones = entradas[k].observaciones;
                         var otros_nombres = entradas[k].otros_nombres;
+                        var clase = entradas[k].clase;
+                        var a = arrayClasesKey.indexOf(clase);
 
                         $table.bootstrapTable('insertRow', {
                             index: 1,
                             row: {
-                                nombre_raiem: nombre_raiem,
+                                nombre_raiem: arrayClasesNombre[a],
                                 localizacion: localizacion,
                                 nivel: 1,
                                 caducidad: caducidad,
                                 cantidad: cantidad,
                                 observaciones: observaciones,
                                 otros_nombres: otros_nombres,
-                                key: k
+                                key: k,
+                                clase: clase
                             }
                         });
                     }
@@ -371,6 +391,12 @@
                     console.log('Error!');
                     console.log(err);
                 }
+
+            }
+
+            function searchInArray(array, obj){
+                var i;
+
             }
 
             function getRevisiones(){
@@ -394,7 +420,7 @@
                         var observaciones = entradas[k].observaciones;
 
                         if (i = 1){ 
-                            ultima_revision = moment(fecha).format("w");
+                            ultima_revision = moment(fecha, "DD-MM-YYYY").format("w");
                             numero_semana = moment().format("w");
 
                             if (ultima_revision < numero_semana) {
@@ -405,9 +431,9 @@
                         }
 
                         var nuevaLinea =
-                            '<li class="list-group-item">(' + moment(fecha).format("w") + ') ' + 
+                            '<li class="list-group-item">(' + moment(fecha, "DD-MM-YYYY").format("w") + ') ' + 
                             '<span class="badge">OK</span>' +
-                            moment(fecha).format("DD-MM-YYYY") +
+                            moment(fecha, "DD-MM-YYYY").format("LL") +
                             '</li>';
 
                         lista.append(nuevaLinea);
@@ -421,8 +447,191 @@
                 }
             }
 
-            getTablaTotal();
-            getRevisiones();
+            function setupPNotify(){
+                PNotify.prototype.options.styling = "fontawesome";
+                $(document).ready(function (){
+                    $('.ui-pnotify').remove();
+                });
+            }
+
+            function getArrayClases(){
+                var ref = firebase.database().ref('clases');
+
+                ref.once("value", function(data) {
+                    var i = 0;
+                    data.forEach(function (childSnap) {
+                        arrayClasesKey[i] = childSnap.key;
+                        arrayClasesNombre[i] = childSnap.val().nombre_raiem;
+                        $('#select-clases').append($('<option>', {
+                            value: arrayClasesKey[i],
+                            text: arrayClasesNombre[i]
+                        }));
+                        i++;
+
+                    });
+                });
+
+                function getParent(snapshot) {
+                    // You can get the reference (A Firebase object) from a snapshot
+                    // using .ref().
+                    var ref = snapshot.ref();
+                    // Now simply find the parent and return the name.
+                    return ref.parent().name();
+                }
+            }
+
+            init();
+
+            function init(){
+                getArrayClases();
+                setupPNotify();
+                getTablaTotal();
+                getRevisiones();
+            }
+            //añadirRegistro(); //TODO borrar
+
         </script>
+
+        <div class="modal fade" id="ModalAñadirRegistro" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="ModalAñadirRegistro">Añadir registro:</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="select-clases">Clase:</label>
+                                <select class="form-control" id="select-clases">
+
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="fecha-registro" class="control-label">Fecha de caducidad:</label>
+                                <input type='text' class="form-control" id='fecha-revision-electromedicina' />
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('#fecha-registro').datetimepicker({
+                                            locale: "es",
+                                            format: "DD-MM-YYYY",
+                                        });
+                                    });
+                                </script>
+                            </div>
+                            <div class="form-group">
+                                <label for="cantidad" class="control-label">Cantidad:</label>
+                                <input type="text" class="form-control" id="cantidad">
+                            </div>
+                            <div class="form-group">
+                                <label for="observaciones" class="control-label">Observaciones:</label>
+                                <textarea class="form-control" id="observaciones"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Send message</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="ModalAñadirRevisionElectromedicina" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Nueva revisión de electromedicina ET-699:</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="fecha-revision-electromedicina" class="control-label">Fecha:</label>
+                                <input type='text' class="form-control" id='fecha-revision-electromedicina' />
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('#fecha-revision-electromedicina').datetimepicker({
+                                            locale: "es",
+                                            format: "DD-MM-YYYY",
+                                        });
+                                    });
+                                </script>
+                            </div>
+                            <div class="form-group">
+                                <label for="observaciones-revision-electromedicina" class="control-label">Observaciones:</label>
+                                <textarea class="form-control" id="observaciones-revision-electromedicina"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="quien-revision-electromedicina" class="control-label">Quién:</label>
+                                <input type="text" class="form-control" id="quien-revision-electromedicina">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <button id="button-añadir-revision-electromedicina" type="button" class="btn btn-primary">Añadir</button>
+                        <script>
+                            $('#button-añadir-revision-electromedicina').on('click', function () {
+                                var data = {
+                                    fecha: $('#fecha-revision-electromedicina').val(),
+                                    observaciones: $('#observaciones-revision-electromedicina').val(),
+                                    quien: $('#quien-revision-electromedicina').val()
+                                }
+                                //TODo show notification
+
+                                var ref = firebase.database().ref("ambulancias/et_699/revisiones_electromedicina/");
+                                ref.push(data);
+                                new PNotify({
+                                    title: 'Añadido',
+                                    text: 'Registro de revisión de electromedicina añadido.',
+                                    type: 'success'
+                                });
+                            });
+
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="ModalEliminar">
+            <div class="modal-dialog">
+                <div class="modal-content" style="background-color:#D9534F" >
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" style="color:#fff">Eliminar</h4>
+                    </div>
+                    <div class="modal-body" style="background:#fff">
+                        <p>
+                            ¿Estás seguro? Esta acción no se puede deshacer.
+                        </p>
+                    </div>
+                    <div class="modal-footer" style="background:#fff">
+                        <div class="btn-group" role="group"><button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button id="button-eliminar" type="button" class="btn btn-danger" data-dismiss="modal">Eliminar</button></div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $('#ModalEliminar').on('show.bs.modal', function (event) {
+                    var i = $(event.relatedTarget).data('id');
+
+                    $('#button-eliminar').on('click', function () {
+
+                        //TODo show notification
+                        new PNotify({
+                            title: 'Eliminado',
+                            text: 'Registro eliminado.',
+                            type: 'success'
+                        });
+                        var ref = firebase.database().ref("ambulancias/et_699/existe");
+                        ref.child(i).remove();
+                    })
+                })
+            </script>
+        </div>
     </body>
 </html>

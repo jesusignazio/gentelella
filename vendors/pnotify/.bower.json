@@ -43,7 +43,6 @@
     "commit": "ffb47b2b4f1ed4aaf6c60db0b84d6218a05dfd22"
   },
   "_source": "https://github.com/sciactive/pnotify.git",
-  "_target": "^3.2.0",
-  "_originalSource": "pnotify",
-  "_direct": true
+  "_target": "^3.0.0",
+  "_originalSource": "pnotify"
 }

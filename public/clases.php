@@ -56,7 +56,7 @@
                                     <div class="row">
                                         <table id="tabla-clases" data-toggle="table"
                                                class="table table-striped table-bordered dt-responsive nowrap" 
-                                               data-sort-name="producto" 
+                                               data-sort-name="nombre_raiem" 
                                                data-sort-order="asc" 
                                                cellspacing="0" 
                                                width="100%"
