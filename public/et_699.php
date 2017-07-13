@@ -64,6 +64,7 @@
                                     <img src="images/699.jpg" style="width: 100%; height: 100%"/>
 
                                     <div id="div-check-revision">
+                                        <h6>Revisión semanal <span class="label label-danger pull-right">Pendiente</span></h6>
 
                                     </div>
 
@@ -265,6 +266,8 @@
 
             var arrayClasesKey = [];
             var arrayClasesNombre = [];
+            var arrayLocalizacionesKey = [];
+            var arrayLocalizacionesNombre = [];
 
             function TableActions (value, row, index) {
 
@@ -369,12 +372,13 @@
                         var otros_nombres = entradas[k].otros_nombres;
                         var clase = entradas[k].clase;
                         var a = arrayClasesKey.indexOf(clase);
+                        var b = arrayLocalizacionesKey.indexOf(localizacion);
 
                         $table.bootstrapTable('insertRow', {
                             index: 1,
                             row: {
                                 nombre_raiem: arrayClasesNombre[a],
-                                localizacion: localizacion,
+                                localizacion: arrayLocalizacionesNombre[b],
                                 nivel: 1,
                                 caducidad: caducidad,
                                 cantidad: cantidad,
@@ -400,6 +404,42 @@
             }
 
             function getRevisiones(){
+                var ref = firebase.database().ref('ambulancias/et_699/revisiones_electromedicina').orderByKey().limitToLast(10);
+                var numero_semana = moment().format("w");
+
+                ref.once("value", function(data) {
+                    var i = 0;
+                    data.forEach(function (childSnap) {
+
+                        var fecha = childSnap.val().fecha;
+
+                        if (moment(fecha, "DD-MM-YYYY").format("w") == numero_semana) {
+
+                            $( "#div-check-revision" ).html( "<h6>Revisión semanal <span class=\"label label-success pull-right\">Hecha</span></h6>" );
+                        }
+
+                        var nuevaLinea =
+                            '<li class="list-group-item">(' + moment(fecha, "DD-MM-YYYY").format("w") + ') ' + 
+                            '<span class="badge">OK</span>' +
+                            moment(fecha, "DD-MM-YYYY").format("LL") +
+                            '</li>';
+
+                        $('#lista-revisiones').append(nuevaLinea);
+                        i++;
+
+                    });
+                });
+
+                function getParent(snapshot) {
+                    // You can get the reference (A Firebase object) from a snapshot
+                    // using .ref().
+                    var ref = snapshot.ref();
+                    // Now simply find the parent and return the name.
+                    return ref.parent().name();
+                }
+            }
+
+            function getRevisiones1(){
                 var database = firebase.database();
                 var ref = database.ref("ambulancias/et_699/revisiones_electromedicina");
                 var lista = $('#lista-revisiones');
@@ -480,10 +520,38 @@
                 }
             }
 
+            function getArrayLocalizaciones(){
+                var ref = firebase.database().ref('ambulancias/et_699/localizaciones');
+
+                ref.once("value", function(data) {
+                    var i = 0;
+                    data.forEach(function (childSnap) {
+                        arrayLocalizacionesKey[i] = childSnap.key;
+                        arrayLocalizacionesNombre[i] = childSnap.val().nombre;
+                        console.log(arrayLocalizacionesNombre[i], arrayLocalizacionesKey[i]);
+                        /**$('#select-clases').append($('<option>', {
+                            value: arrayClasesKey[i],
+                            text: arrayClasesNombre[i]
+                        }));**/
+                        i++;
+
+                    });
+                });
+
+                function getParent(snapshot) {
+                    // You can get the reference (A Firebase object) from a snapshot
+                    // using .ref().
+                    var ref = snapshot.ref();
+                    // Now simply find the parent and return the name.
+                    return ref.parent().name();
+                }
+            }
+
             init();
 
             function init(){
                 getArrayClases();
+                getArrayLocalizaciones();
                 setupPNotify();
                 getTablaTotal();
                 getRevisiones();
