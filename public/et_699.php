@@ -40,9 +40,18 @@
                         </div>
 
                         <div class="title_right">
-                            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                                <div style="height:35px">
-                                </div>
+                            <div class="col-xs-2 pull-right">
+                                
+                                    <div class="btn-group">
+  <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="fa fa-cog"></span>
+    Ajustes <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="et_699_niveles.php">Niveles</a></li>
+  </ul>
+</div>
+                            
                             </div>
                         </div>
                     </div>
@@ -116,7 +125,7 @@
 
                                             </tbody>
                                         </table>
-                                        <button id="añadirRegistro" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ModalAñadirRegistro"><span class="fa fa-plus"></span> Añadir</button>
+                                        <button id="añadirRegistro" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ModalRegistro"><span class="fa fa-plus"></span> Añadir</button>
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +141,8 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                    To do...
+                                                                            <button id="añadirNivel" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ModalAñadirNivel"><span class="fa fa-plus"></span> Añadir nivel</button>
+
                                 </div>
                             </div>
                         </div>
@@ -203,17 +213,12 @@
         <script> //TODO borrar
             function añadirRegistro(){
                 var database = firebase.database();
-                var ref = database.ref("ambulancias").child("et_699").child("existe");
+                var ref = database.ref("ambulancias").child("et_699").child("niveles");
                 var data = {
-                    caducidad : "18/04/2017",
-                    cantidad : "12",
-                    clase : "-KnErcpZFZkNyEneJKOX",
-                    key : "-KnoL6H9XctKPCNBAP_",
-                    localizacion : "Puerta ampulario",
-                    nivel : 1,
-                    nombre_raiem : "Midazolam 50 mg",
-                    observaciones : " ",
-                    otros_nombres : "Midazolam, Dormicum"
+                    clase : "-Ko6cytls9uBdDuNnt2S",
+                    nivel : 2,
+                    existe: 1,
+                    localizacion: "cajon_1"
                 }
                 ref.push(data);
             };
@@ -266,6 +271,7 @@
 
             var arrayClasesKey = [];
             var arrayClasesNombre = [];
+            var arrayClasesOtrosNombres = [];
             var arrayLocalizacionesKey = [];
             var arrayLocalizacionesNombre = [];
 
@@ -336,9 +342,12 @@
                 ref.on('value', gotData, errData);
 
                 $table.on('editable-save.bs.table', function(field, row, oldValue, $el){
+                    
+                    var i = arrayLocalizacionesNombre.indexOf(oldValue.localizacion);
+                   
                     var update = {
                         nombre_raiem: oldValue.nombre_raiem,
-                        localizacion: oldValue.localizacion,
+                        localizacion: arrayLocalizacionesKey[i],
                         nivel: oldValue.nivel,
                         caducidad: oldValue.caducidad,
                         cantidad: oldValue.cantidad,
@@ -347,7 +356,7 @@
                         clase: oldValue.clase
                     }                   
 
-                    ref.child(oldValue.key).update(oldValue);                
+                    ref.child(oldValue.key).update(update);                
                 });
                 $table.bootstrapTable({
                     exportOptions: {
@@ -369,7 +378,6 @@
                         var cantidad = entradas[k].cantidad;
                         var localizacion = entradas[k].localizacion;
                         var observaciones = entradas[k].observaciones;
-                        var otros_nombres = entradas[k].otros_nombres;
                         var clase = entradas[k].clase;
                         var a = arrayClasesKey.indexOf(clase);
                         var b = arrayLocalizacionesKey.indexOf(localizacion);
@@ -383,7 +391,7 @@
                                 caducidad: caducidad,
                                 cantidad: cantidad,
                                 observaciones: observaciones,
-                                otros_nombres: otros_nombres,
+                                otros_nombres: arrayClasesOtrosNombres[a],
                                 key: k,
                                 clase: clase
                             }
@@ -502,7 +510,12 @@
                     data.forEach(function (childSnap) {
                         arrayClasesKey[i] = childSnap.key;
                         arrayClasesNombre[i] = childSnap.val().nombre_raiem;
-                        $('#select-clases').append($('<option>', {
+                        arrayClasesOtrosNombres[i] = childSnap.val().otros_nombres;
+                        $('#registro-nombre').append($('<option>', {
+                            value: arrayClasesKey[i],
+                            text: arrayClasesNombre[i]
+                        }));
+                        $('#select-clases-nivel').append($('<option>', {
                             value: arrayClasesKey[i],
                             text: arrayClasesNombre[i]
                         }));
@@ -528,11 +541,14 @@
                     data.forEach(function (childSnap) {
                         arrayLocalizacionesKey[i] = childSnap.key;
                         arrayLocalizacionesNombre[i] = childSnap.val().nombre;
-                        console.log(arrayLocalizacionesNombre[i], arrayLocalizacionesKey[i]);
-                        /**$('#select-clases').append($('<option>', {
-                            value: arrayClasesKey[i],
-                            text: arrayClasesNombre[i]
-                        }));**/
+                        $('#select-localizacion-nivel').append($('<option>', {
+                            value: arrayLocalizacionesKey[i],
+                            text: arrayLocalizacionesNombre[i]
+                        }));
+                        $('#registro-localizacion').append($('<option>', {
+                            value: arrayLocalizacionesKey[i],
+                            text: arrayLocalizacionesNombre[i]
+                        }));
                         i++;
 
                     });
@@ -560,27 +576,33 @@
 
         </script>
 
-        <div class="modal fade" id="ModalAñadirRegistro" tabindex="-1" role="dialog">
+        <div class="modal fade-in" id="ModalRegistro" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="ModalAñadirRegistro">Añadir registro:</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Añadir registro:</h4>
                     </div>
                     <div class="modal-body">
                         <form>
                             <div class="form-group">
-                                <label for="select-clases">Clase:</label>
-                                <select class="form-control" id="select-clases">
+                                <label for="registro-nombre">Clase:</label>
+                                <select class="form-control" id="registro-nombre">
 
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="fecha-registro" class="control-label">Fecha de caducidad:</label>
-                                <input type='text' class="form-control" id='fecha-revision-electromedicina' />
+                                <label for="registro-localizacion">Localización:</label>
+                                <select class="form-control" id="registro-localizacion">
+
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="registro-caducidad" class="control-label">Fecha de caducidad:</label>
+                                <input type='text' class="form-control" id='registro-caducidad' />
                                 <script type="text/javascript">
                                     $(function () {
-                                        $('#fecha-registro').datetimepicker({
+                                        $('#registro-caducidad').datetimepicker({
                                             locale: "es",
                                             format: "DD-MM-YYYY",
                                         });
@@ -588,19 +610,44 @@
                                 </script>
                             </div>
                             <div class="form-group">
-                                <label for="cantidad" class="control-label">Cantidad:</label>
-                                <input type="text" class="form-control" id="cantidad">
+                                <label for="registro-cantidad" class="control-label">Cantidad:</label>
+                                <input type="text" class="form-control" id="registro-cantidad">
                             </div>
                             <div class="form-group">
-                                <label for="observaciones" class="control-label">Observaciones:</label>
-                                <textarea class="form-control" id="observaciones"></textarea>
+                                <label for="registro-observaciones" class="control-label">Observaciones:</label>
+                                <textarea class="form-control" id="registro-obseraciones"></textarea>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Send message</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="button-añadir-registro" data-dismiss="modal">Añadir</button>
                     </div>
+                     <script>
+                            $('#button-añadir-registro').on('click', function () {
+                                var i = arrayClasesKey.indexOf($('#registro-nombre').val());
+                        
+                                var data = {
+                                     caducidad : $('#registro-caducidad').val(),
+                    cantidad : $('#registro-cantidad').val(),
+                    clase : arrayClasesKey[i],
+                    localizacion : $('#registro-localizacion').val(),
+                    nivel : 0, //TODO
+                    nombre_raiem : arrayClasesNombre[i],
+                    observaciones : " ",
+                                                }
+                                //TODo show notification
+
+                                var ref = firebase.database().ref("ambulancias/et_699/existe/");
+                                ref.push(data);
+                                new PNotify({
+                                    title: 'Añadido registro',
+                                    text: 'Registro añadido.',
+                                    type: 'success'
+                                });
+                            });
+
+                        </script>
                 </div>
             </div>
         </div>
@@ -638,7 +685,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button id="button-añadir-revision-electromedicina" type="button" class="btn btn-primary">Añadir</button>
+                        <button id="button-añadir-revision-electromedicina" type="button" data-dismiss="modal" class="btn btn-primary">Añadir</button>
                         <script>
                             $('#button-añadir-revision-electromedicina').on('click', function () {
                                 var data = {
@@ -653,6 +700,61 @@
                                 new PNotify({
                                     title: 'Añadido',
                                     text: 'Registro de revisión de electromedicina añadido.',
+                                    type: 'success'
+                                });
+                            });
+
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+         <div class="modal fade" id="ModalAñadirNivel" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Añadir nivel:</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="select-clases-nivel">Clase:</label>
+                                <select class="form-control" id="select-clases-nivel">
+
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="select-localizacion-nivel">Localizacion:</label>
+                                <select class="form-control" id="select-localizacion-nivel">
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="textarea-nivel" class="control-label">Nivel:</label>
+                                <textarea class="form-control" id="textarea-nivel"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <button id="button-modal-nivel" type="button" class="btn btn-primary">Añadir</button>
+                        <script>
+                            $('#button-modal-nivel').on('click', function () {
+                                var data = {
+                                    clase: $('#select-clases-nivel').val(),
+                                    localizacion: $('#select-localizacion-nivel').val(),
+                                    nivel: $('#textarea-nivel').val()
+                                }
+                                //TODo show notification
+
+                                var ref = firebase.database().ref("ambulancias/et_699/niveles/");
+                                ref.push(data);
+                                new PNotify({
+                                    title: 'Añadido',
+                                    text: 'Registro de Nivel añadido.',
                                     type: 'success'
                                 });
                             });
