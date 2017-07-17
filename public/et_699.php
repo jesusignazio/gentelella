@@ -41,17 +41,17 @@
 
                         <div class="title_right">
                             <div class="col-xs-2 pull-right">
-                                
-                                    <div class="btn-group">
-  <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <span class="fa fa-cog"></span>
-    Ajustes <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu">
-    <li><a href="et_699_niveles.php">Niveles</a></li>
-  </ul>
-</div>
-                            
+
+                                <div class="btn-group">
+                                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="fa fa-cog"></span>
+                                        Ajustes <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="et_699_niveles.php">Niveles</a></li>
+                                    </ul>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                                     <div class="container">
                                         <table id="tabla-total" data-toggle="table"
                                                class="table table-striped table-bordered dt-responsive nowrap" 
-                                               data-sort-name="producto" 
+                                               data-sort-name="nombre_raiem" 
                                                data-sort-order="asc" 
                                                cellspacing="0" 
                                                width="100%"
@@ -141,7 +141,7 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                                                            <button id="añadirNivel" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ModalAñadirNivel"><span class="fa fa-plus"></span> Añadir nivel</button>
+                                    <button id="añadirNivel" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ModalAñadirNivel"><span class="fa fa-plus"></span> Añadir nivel</button>
 
                                 </div>
                             </div>
@@ -170,7 +170,37 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                    To do...
+                                    <div class="container">
+                                        <table id="tabla-caduca" data-toggle="table"
+                                               class="table table-striped table-bordered dt-responsive nowrap" 
+                                               data-sort-name="nombre_raiem" 
+                                               data-sort-order="asc" 
+                                               cellspacing="0" 
+                                               width="100%"
+                                               data-mobile-responsive="true"                                               data-show-columns="true"
+                                               data-show-export="true"
+                                               data-pagination="true"
+                                               data-export-types="['excel', 'pdf']"
+                                               data-filter-control="true">
+                                            <thead>
+
+                                                <tr>
+                                                    <th data-sortable="true" data-field="nombre_raiem">Nombre</th>
+                                                    <th data-align="center" data-sortable="true" data-filter-control="select" data-field="localizacion">Localización</th>
+                                                    <th data-editable="true" data-sortable="true" data-field="caducidad">Caducidad</th>
+                                                    <th data-editable="true" data-editable="true" data-field="cantidad">Cantidad</th>
+                                                    <th data-editable="true" data-field="observaciones">Observaciones</th>
+                                                    <th data-editable="true" data-visible="false" data-field="otros_nombres">Otros nombres</th>
+                                                    <th data-visible="false" data-field="key">Clave</th>
+                                                    <th data-visible="false" data-field="clase">Clave clase</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                        <button id="añadirRegistro" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ModalRegistro"><span class="fa fa-plus"></span> Añadir</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -342,9 +372,9 @@
                 ref.on('value', gotData, errData);
 
                 $table.on('editable-save.bs.table', function(field, row, oldValue, $el){
-                    
+
                     var i = arrayLocalizacionesNombre.indexOf(oldValue.localizacion);
-                   
+
                     var update = {
                         nombre_raiem: oldValue.nombre_raiem,
                         localizacion: arrayLocalizacionesKey[i],
@@ -366,6 +396,7 @@
 
                 function gotData(data){
                     $table.bootstrapTable('removeAll');
+                    $('#tabla-caduca').bootstrapTable('removeAll');
 
                     var entradas = data.val();
                     var keys = Object.keys(entradas);
@@ -396,14 +427,32 @@
                                 clase: clase
                             }
                         });
+
+                        var today = moment();
+                        var e = moment(caducidad, "DD-MM-YYYY");
+                        if (e.diff(today, 'days') < 0){
+                            $('#tabla-caduca').bootstrapTable('insertRow', {
+                                index: 1,
+                                row: {
+                                    nombre_raiem: arrayClasesNombre[a],
+                                    localizacion: arrayLocalizacionesNombre[b],
+                                    caducidad: caducidad,
+                                    cantidad: cantidad,
+                                    observaciones: observaciones,
+                                    otros_nombres: arrayClasesOtrosNombres[a],
+                                    key: k,
+                                    clase: clase
+                                }
+                            });
+                        }
                     }
                 }
 
                 function errData(err) {
                     console.log('Error!');
                     console.log(err);
-                }
 
+                }
             }
 
             function searchInArray(array, obj){
@@ -623,31 +672,31 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                         <button type="button" class="btn btn-primary" id="button-añadir-registro" data-dismiss="modal">Añadir</button>
                     </div>
-                     <script>
-                            $('#button-añadir-registro').on('click', function () {
-                                var i = arrayClasesKey.indexOf($('#registro-nombre').val());
-                        
-                                var data = {
-                                     caducidad : $('#registro-caducidad').val(),
-                    cantidad : $('#registro-cantidad').val(),
-                    clase : arrayClasesKey[i],
-                    localizacion : $('#registro-localizacion').val(),
-                    nivel : 0, //TODO
-                    nombre_raiem : arrayClasesNombre[i],
-                    observaciones : " ",
-                                                }
-                                //TODo show notification
+                    <script>
+                        $('#button-añadir-registro').on('click', function () {
+                            var i = arrayClasesKey.indexOf($('#registro-nombre').val());
 
-                                var ref = firebase.database().ref("ambulancias/et_699/existe/");
-                                ref.push(data);
-                                new PNotify({
-                                    title: 'Añadido registro',
-                                    text: 'Registro añadido.',
-                                    type: 'success'
-                                });
+                            var data = {
+                                caducidad : $('#registro-caducidad').val(),
+                                cantidad : $('#registro-cantidad').val(),
+                                clase : arrayClasesKey[i],
+                                localizacion : $('#registro-localizacion').val(),
+                                nivel : 0, //TODO
+                                nombre_raiem : arrayClasesNombre[i],
+                                observaciones : " ",
+                            }
+                            //TODo show notification
+
+                            var ref = firebase.database().ref("ambulancias/et_699/existe/");
+                            ref.push(data);
+                            new PNotify({
+                                title: 'Añadido registro',
+                                text: 'Registro añadido.',
+                                type: 'success'
                             });
+                        });
 
-                        </script>
+                    </script>
                 </div>
             </div>
         </div>
@@ -709,8 +758,8 @@
                 </div>
             </div>
         </div>
-        
-         <div class="modal fade" id="ModalAñadirNivel" tabindex="-1" role="dialog">
+
+        <div class="modal fade" id="ModalAñadirNivel" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -730,14 +779,14 @@
                                 <select class="form-control" id="select-localizacion-nivel">
                                 </select>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="textarea-nivel" class="control-label">Nivel:</label>
                                 <textarea class="form-control" id="textarea-nivel"></textarea>
                             </div>
                         </form>
                     </div>
-                    
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                         <button id="button-modal-nivel" type="button" class="btn btn-primary">Añadir</button>
