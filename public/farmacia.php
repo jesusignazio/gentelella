@@ -54,44 +54,41 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                    <div class="fixed-table-toolbar">
-                                        <div class="bs-bars pull-left"><div id="toolbar">        
-                                            <button disabled="" class="btn btn-danger" id="remove">            
-                                                <i class="glyphicon glyphicon-remove"></i> Borrar       
-                                            </button>    
-                                            </div>
-                                        </div>
+                                    <div class="container">
+                                        <table id="tabla-total" data-toggle="table"
+                                               class="table table-striped table-bordered dt-responsive nowrap" 
+                                               data-sort-name="nombre_raiem" 
+                                               data-sort-order="asc" 
+                                               cellspacing="0" 
+                                               width="100%"
+                                               data-mobile-responsive="true"
+                                               data-search="true"
+                                               data-show-columns="true"
+                                               data-show-export="true"
+                                               data-pagination="true"
+                                               data-export-types="['excel', 'pdf']"
+                                               data-filter-control="true">
+                                            <thead>
+
+                                                <tr>
+                                                    <th data-sortable="true" data-field="nombre_raiem">Nombre</th>
+                                                    <th data-align="center" data-sortable="true" data-filter-control="select" data-field="localizacion">Localización</th>
+                                                    <th data-editable="true" data-sortable="true" data-field="caducidad">Caducidad</th>
+                                                    <th data-editable="true" data-editable="true" data-field="cantidad">Cantidad</th>
+                                                    <th data-field="nivel">Nivel</th>
+                                                    <th data-editable="true" data-field="observaciones">Observaciones</th>
+                                                    <th data-editable="true" data-visible="false" data-field="otros_nombres">Otros nombres</th>
+                                                    <th data-align="center" data-formatter="TableActions">Acciones</th>
+                                                    <th data-visible="false" data-field="key">Clave</th>
+                                                    <th data-visible="false" data-field="clase">Clave clase</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                        <button id="añadirRegistro" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ModalRegistro"><span class="fa fa-plus"></span> Añadir</button>
                                     </div>
-                                    <table id="tabla" 
-                                           class="table table-striped table-bordered dt-responsive nowrap" 
-                                           data-sort-name="nombre" 
-                                           data-sort-order="asc" 
-                                           cellspacing="0" 
-                                           width="100%"
-                                           data-row-style="rowStyle"
-                                           data-mobile-responsive="true"
-                                           data-search="true"
-                                           data-show-columns="true"
-                                           data-show-export="true"
-                                           data-pagination="true"
-                                           data-export-types="['excel']"
-                                           data-filter-control="false"
-
-                                           >
-                                        <thead>
-                                            <tr> 
-                                                <th data-sortable="true" data-field="nombre" data-align="left">Nombre</th>
-                                                <th data-sortable="true" data-field="caducidad" data-align="center">Caducidad</th>
-                                                <th data-sortable="true" data-field="cantidad" data-align="center">Cantidad</th>
-                                                <th data-sortable="true" data-field="sublocalizacion" data-align="center">Localización</th>
-                                                <th data-sortable="false" data-field="otros_nombres" data-align="center">Otros nombres</th>
-                                                <th data-sortable="false" data-field="id_producto" data-align="center">ID</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        </tbody>
-                                    </table>
                                 </div>
                             </div>
                         </div>

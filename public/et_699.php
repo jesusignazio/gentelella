@@ -191,6 +191,7 @@
                                                     <th data-editable="true" data-editable="true" data-field="cantidad">Cantidad</th>
                                                     <th data-editable="true" data-field="observaciones">Observaciones</th>
                                                     <th data-editable="true" data-visible="false" data-field="otros_nombres">Otros nombres</th>
+                                                    <th data-align="center" data-field="existe_farmacia">Farmacia</th>
                                                     <th data-visible="false" data-field="key">Clave</th>
                                                     <th data-visible="false" data-field="clase">Clave clase</th>
                                                 </tr>
@@ -304,6 +305,8 @@
             var arrayClasesOtrosNombres = [];
             var arrayLocalizacionesKey = [];
             var arrayLocalizacionesNombre = [];
+            var arrayFarmaciaExiste = [];
+            var arrayFarmaciaKey = [];
 
             function TableActions (value, row, index) {
 
@@ -412,6 +415,7 @@
                         var clase = entradas[k].clase;
                         var a = arrayClasesKey.indexOf(clase);
                         var b = arrayLocalizacionesKey.indexOf(localizacion);
+                        var c = arrayFarmaciaKey.indexOf(clase);
 
                         $table.bootstrapTable('insertRow', {
                             index: 1,
@@ -431,6 +435,15 @@
                         var today = moment();
                         var e = moment(caducidad, "DD-MM-YYYY");
                         if (e.diff(today, 'days') < 0){
+                            var existe;
+                            switch (arrayFarmaciaExiste[c]){
+                                case true:
+                                    existe = "<span class=\"fa fa-check-square\"></span>";
+                                    break;
+                                case false:
+                                    break;
+                                default:
+                                                              }
                             $('#tabla-caduca').bootstrapTable('insertRow', {
                                 index: 1,
                                 row: {
@@ -440,6 +453,7 @@
                                     cantidad: cantidad,
                                     observaciones: observaciones,
                                     otros_nombres: arrayClasesOtrosNombres[a],
+                                    existe_farmacia: existe,
                                     key: k,
                                     clase: clase
                                 }
@@ -612,10 +626,43 @@
                 }
             }
 
+            function getExistenciasFarmacia(){
+                var ref = firebase.database().ref('farmacia/existe/');
+
+                ref.once("value", function(data) {
+                    var i = 0;
+
+                    data.forEach(function (childSnap) {
+                        arrayFarmaciaKey[i] = childSnap.key;
+                        var bool_i;
+
+                        switch (childSnap.val().cantidad) {
+                            case 0: 
+                                arrayFarmaciaExiste[i] = true;
+                                break;
+                            default: 
+                                arrayFarmaciaExiste = false;
+                                break;
+
+                                                        }                        
+                        i++;
+                    });
+                });
+
+                function getParent(snapshot) {
+                    // You can get the reference (A Firebase object) from a snapshot
+                    // using .ref().
+                    var ref = snapshot.ref();
+                    // Now simply find the parent and return the name.
+                    return ref.parent().name();
+                }
+            }
+
             init();
 
             function init(){
                 getArrayClases();
+                getExistenciasFarmacia();
                 getArrayLocalizaciones();
                 setupPNotify();
                 getTablaTotal();
