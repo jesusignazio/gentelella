@@ -119,6 +119,8 @@
                                                     <th data-align="center" data-formatter="TableActions">Acciones</th>
                                                     <th data-visible="false" data-field="key">Clave</th>
                                                     <th data-visible="false" data-field="clase">Clave clase</th>
+                                                    <th data-visible="false" data-field="clave_nivel">Clave nivel</th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -200,7 +202,37 @@
 
                                             </tbody>
                                         </table>
-                                        <button id="añadirRegistro" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ModalRegistro"><span class="fa fa-plus"></span> Añadir</button>
+                                    </div>
+                                    <div class="container">
+                                        <table id="tabla-nivel" data-toggle="table"
+                                               class="table table-striped table-bordered dt-responsive nowrap" 
+                                               data-sort-name="nombre_raiem" 
+                                               data-sort-order="asc" 
+                                               cellspacing="0" 
+                                               width="100%"
+                                               data-mobile-responsive="true"                                               data-show-columns="true"
+                                               data-show-export="true"
+                                               data-pagination="true"
+                                               data-export-types="['excel', 'pdf']"
+                                               data-filter-control="true">
+                                            <thead>
+
+                                                <tr>
+                                                    <th data-sortable="true" data-field="nombre_raiem">Nombre</th>
+                                                    <th data-align="center" data-sortable="true" data-filter-control="select" data-field="localizacion">Localización</th>
+                                                    <th data-editable="true" data-sortable="true" data-field="caducidad">Caducidad</th>
+                                                    <th data-editable="true" data-editable="true" data-field="cantidad">Cantidad</th>
+                                                    <th data-editable="true" data-field="observaciones">Observaciones</th>
+                                                    <th data-editable="true" data-visible="false" data-field="otros_nombres">Otros nombres</th>
+                                                    <th data-align="center" data-field="existe_farmacia">Farmacia</th>
+                                                    <th data-visible="false" data-field="key">Clave</th>
+                                                    <th data-visible="false" data-field="clase">Clave clase</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -391,6 +423,7 @@
 
                     ref.child(oldValue.key).update(update);                
                 });
+
                 $table.bootstrapTable({
                     exportOptions: {
                         fileName: 'tabla'
@@ -413,6 +446,8 @@
                         var localizacion = entradas[k].localizacion;
                         var observaciones = entradas[k].observaciones;
                         var clase = entradas[k].clase;
+                        var nivel = entradas[k].nivel;
+                        var clave_nivel = entradas[k].clave_nivel;
                         var a = arrayClasesKey.indexOf(clase);
                         var b = arrayLocalizacionesKey.indexOf(localizacion);
                         var c = arrayFarmaciaKey.indexOf(clase);
@@ -422,13 +457,14 @@
                             row: {
                                 nombre_raiem: arrayClasesNombre[a],
                                 localizacion: arrayLocalizacionesNombre[b],
-                                nivel: 1,
+                                nivel: nivel,
                                 caducidad: caducidad,
                                 cantidad: cantidad,
                                 observaciones: observaciones,
                                 otros_nombres: arrayClasesOtrosNombres[a],
                                 key: k,
-                                clase: clase
+                                clase: clase,
+                                clave_nivel: clave_nivel
                             }
                         });
 
@@ -443,7 +479,7 @@
                                 case false:
                                     break;
                                 default:
-                                                              }
+                                                          }
                             $('#tabla-caduca').bootstrapTable('insertRow', {
                                 index: 1,
                                 row: {
@@ -627,7 +663,7 @@
             }
 
             function getExistenciasFarmacia(){
-                var ref = firebase.database().ref('farmacia/existe/');
+                var ref = firebase.database().ref('farmacia/nivel/');
 
                 ref.once("value", function(data) {
                     var i = 0;
@@ -722,25 +758,57 @@
                     <script>
                         $('#button-añadir-registro').on('click', function () {
                             var i = arrayClasesKey.indexOf($('#registro-nombre').val());
+                            var var_nivel = 0;
+                            var var_clave_nivel;
+                            var var_existe_previo;
 
-                            var data = {
-                                caducidad : $('#registro-caducidad').val(),
-                                cantidad : $('#registro-cantidad').val(),
-                                clase : arrayClasesKey[i],
-                                localizacion : $('#registro-localizacion').val(),
-                                nivel : 0, //TODO
-                                nombre_raiem : arrayClasesNombre[i],
-                                observaciones : " ",
-                            }
-                            //TODo show notification
+                            var ref_nivel = firebase.database().ref("ambulancias/et_699/niveles");
+                            ref_nivel.orderByChild("clase")
+                                .equalTo(arrayClasesKey[i]);
 
-                            var ref = firebase.database().ref("ambulancias/et_699/existe/");
-                            ref.push(data);
-                            new PNotify({
-                                title: 'Añadido registro',
-                                text: 'Registro añadido.',
-                                type: 'success'
+                            ref_nivel.once("value", function(data) {
+                                var e = 0;
+                                data.forEach(function (childSnap) {
+
+                                    var loc = childSnap.val().localizacion;
+                                    var clas = childSnap.val().clase;
+
+                                    if (loc == $('#registro-localizacion').val() && clas == $('#registro-nombre').val()){
+                                        var_nivel = childSnap.val().nivel;
+                                        var_clave_nivel = childSnap.key;
+                                        var_existe_previo = childSnap.val().existe;
+                                    }
+                                    e++;
+
+                                });
+                                var data = {
+                                    caducidad : $('#registro-caducidad').val(),
+                                    cantidad : $('#registro-cantidad').val(),
+                                    clase : arrayClasesKey[i],
+                                    localizacion : $('#registro-localizacion').val(),
+                                    nivel : var_nivel,
+                                    clave_nivel: var_clave_nivel,
+                                    nombre_raiem : arrayClasesNombre[i],
+                                    observaciones : " ",
+                                }
+
+                                var ref = firebase.database().ref("ambulancias/et_699/existe/");
+                                ref.push(data);
+                                
+                                var var_existe = (parseInt(var_existe_previo) + parseInt($('#registro-cantidad').val()));
+
+                                firebase.database().ref("ambulancias/et_699/niveles/" + var_clave_nivel).update({
+                                    "existe": var_existe
+                                });
+                                
+                                new PNotify({
+                                    title: 'Añadido registro',
+                                    text: 'Registro añadido.',
+                                    type: 'success'
+                                });
                             });
+
+
                         });
 
                     </script>
