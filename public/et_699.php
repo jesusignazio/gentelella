@@ -220,8 +220,8 @@
                                                 <tr>
                                                     <th data-sortable="true" data-field="nombre_raiem">Nombre</th>
                                                     <th data-align="center" data-sortable="true" data-filter-control="select" data-field="localizacion">Localización</th>
-                                                    <th data-editable="true" data-sortable="true" data-field="caducidad">Caducidad</th>
-                                                    <th data-editable="true" data-editable="true" data-field="cantidad">Cantidad</th>
+                                                    <th data-editable="true" data-sortable="true" data-field="cantidad">Cantidad</th>
+                                                    <th data-editable="true" data-editable="true" data-field="nivel">Nivel</th>
                                                     <th data-editable="true" data-field="observaciones">Observaciones</th>
                                                     <th data-editable="true" data-visible="false" data-field="otros_nombres">Otros nombres</th>
                                                     <th data-align="center" data-field="existe_farmacia">Farmacia</th>
