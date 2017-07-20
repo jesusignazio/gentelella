@@ -223,7 +223,6 @@
                                                     <th data-editable="true" data-sortable="true" data-field="cantidad">Cantidad</th>
                                                     <th data-editable="true" data-editable="true" data-field="nivel">Nivel</th>
                                                     <th data-editable="true" data-field="observaciones">Observaciones</th>
-                                                    <th data-editable="true" data-visible="false" data-field="otros_nombres">Otros nombres</th>
                                                     <th data-align="center" data-field="existe_farmacia">Farmacia</th>
                                                     <th data-visible="false" data-field="key">Clave</th>
                                                     <th data-visible="false" data-field="clase">Clave clase</th>
@@ -671,8 +670,6 @@
                     data.forEach(function (childSnap) {
                         arrayFarmaciaKey[i] = childSnap.key;
                         var bool_i;
-                        console.log(childSnap.key);
-
                         switch (childSnap.val().cantidad) {
                             case 0: 
                                 arrayFarmaciaExiste[i] = false;
@@ -694,6 +691,55 @@
                 }
             }
 
+            function getTablaNivel(){
+                var ref = firebase.database().ref('ambulancias/et_699/niveles/');
+
+                ref.once("value", function(data) {
+
+                    data.forEach(function (childSnap) {
+
+                        var var_nivel = childSnap.val().nivel;
+                        var var_existe = childSnap.val().existe;
+                        
+                        var a = arrayClasesKey.indexOf(childSnap.val().clase);
+                        var b = arrayLocalizacionesKey.indexOf(childSnap.val().localizacion);
+                        var c = arrayFarmaciaKey.indexOf(childSnap.val().clase);
+
+                        if (var_existe < parseInt(var_nivel)){
+                            /**$('#tabla-nivel').bootstrapTable('insertRow', {
+                                index: 1,
+                                row: {
+                                    nombre_raiem: arrayClasesNombre[a],
+                                    localizacion: arrayLocalizacionesNombre[b],
+                                    falta: (childSnap.val().nivel - childSnap.val().existe),
+                                    nivel: childSnap.val().nivel,
+                                    otros_nombres: arrayClasesOtrosNombres[a],
+                                    existe_farmacia: true,
+                                    key: childSnap.key,
+                                    clave_clase: childSnap.val().clase
+                                }
+                            });**/
+                            console.log(arrayClasesNombre[a], childSnap.val().nivel, childSnap.val().existe);
+                        }
+                    });
+                });
+
+
+
+            }
+
+            function debug001(){
+                var ref = firebase.database().ref('ambulancias/et_699/niveles/');
+
+                ref.once("value", function(data) {
+                    data.forEach(function (childSnap){
+                        firebase.database().ref("ambulancias/et_699/niveles/" + childSnap.key).update({
+                            "existe": 0
+                        });
+                    });
+                });
+            }
+
             init();
 
             function init(){
@@ -703,6 +749,8 @@
                 setupPNotify();
                 getTablaTotal();
                 getRevisiones();
+                getTablaNivel();
+                //debug001(); //Poner existe a 0 en nivel
             }
             //añadirRegistro(); //TODO borrar
 
@@ -794,13 +842,13 @@
 
                                 var ref = firebase.database().ref("ambulancias/et_699/existe/");
                                 ref.push(data);
-                                
+
                                 var var_existe = (parseInt(var_existe_previo) + parseInt($('#registro-cantidad').val()));
 
                                 firebase.database().ref("ambulancias/et_699/niveles/" + var_clave_nivel).update({
                                     "existe": var_existe
                                 });
-                                
+
                                 new PNotify({
                                     title: 'Añadido registro',
                                     text: 'Registro añadido.',
@@ -910,7 +958,8 @@
                                 var data = {
                                     clase: $('#select-clases-nivel').val(),
                                     localizacion: $('#select-localizacion-nivel').val(),
-                                    nivel: $('#textarea-nivel').val()
+                                    nivel: parseInt($('#textarea-nivel').val()),
+                                    existe: 0
                                 }
                                 //TODo show notification
 
