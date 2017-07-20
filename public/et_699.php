@@ -105,15 +105,15 @@
                                                data-show-export="true"
                                                data-pagination="true"
                                                data-export-types="['excel', 'pdf']"
-                                               data-filter-control="true">
+                                               >
                                             <thead>
 
                                                 <tr>
                                                     <th data-sortable="true" data-field="nombre_raiem">Nombre</th>
-                                                    <th data-align="center" data-sortable="true" data-filter-control="select" data-field="localizacion">Localización</th>
-                                                    <th data-editable="true" data-sortable="true" data-field="caducidad">Caducidad</th>
-                                                    <th data-editable="true" data-editable="true" data-field="cantidad">Cantidad</th>
-                                                    <th data-field="nivel">Nivel</th>
+                                                    <th data-align="center" data-sortable="true" data-field="localizacion">Localización</th>
+                                                    <th data-align="center" data-editable="true" data-sortable="true" data-field="caducidad">Caducidad</th>
+                                                    <th data-align="center" data-editable="true" data-editable="true" data-field="cantidad">Cantidad</th>
+                                                    <th data-align="center" data-field="nivel">Nivel</th>
                                                     <th data-editable="true" data-field="observaciones">Observaciones</th>
                                                     <th data-editable="true" data-visible="false" data-field="otros_nombres">Otros nombres</th>
                                                     <th data-align="center" data-formatter="TableActions">Acciones</th>
@@ -167,12 +167,13 @@
                         <div class="col-sm-6">
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2>Caduca o por debajo del nivel</h2>
+                                    <h2>Incidencias</h2>
 
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
                                     <div class="container">
+                                        <h4>Caducado:</h4>
                                         <table id="tabla-caduca" data-toggle="table"
                                                class="table table-striped table-bordered dt-responsive nowrap" 
                                                data-sort-name="nombre_raiem" 
@@ -183,14 +184,14 @@
                                                data-show-export="true"
                                                data-pagination="true"
                                                data-export-types="['excel', 'pdf']"
-                                               data-filter-control="true">
+                                               >
                                             <thead>
 
                                                 <tr>
                                                     <th data-sortable="true" data-field="nombre_raiem">Nombre</th>
-                                                    <th data-align="center" data-sortable="true" data-filter-control="select" data-field="localizacion">Localización</th>
-                                                    <th data-editable="true" data-sortable="true" data-field="caducidad">Caducidad</th>
-                                                    <th data-editable="true" data-editable="true" data-field="cantidad">Cantidad</th>
+                                                    <th data-align="center" data-sortable="true" data-field="localizacion">Localización</th>
+                                                    <th data-align="center" data-editable="true" data-sortable="true" data-field="caducidad">Caducidad</th>
+                                                    <th data-align="center" data-editable="true" data-editable="true" data-field="cantidad">Cantidad</th>
                                                     <th data-editable="true" data-field="observaciones">Observaciones</th>
                                                     <th data-editable="true" data-visible="false" data-field="otros_nombres">Otros nombres</th>
                                                     <th data-align="center" data-field="existe_farmacia">Farmacia</th>
@@ -203,30 +204,32 @@
                                             </tbody>
                                         </table>
                                     </div>
+
                                     <div class="container">
+                                        <h4>Por debajo del nivel:</h4>
                                         <table id="tabla-nivel" data-toggle="table"
                                                class="table table-striped table-bordered dt-responsive nowrap" 
                                                data-sort-name="nombre_raiem" 
                                                data-sort-order="asc" 
                                                cellspacing="0" 
                                                width="100%"
-                                               data-mobile-responsive="true"                                               data-show-columns="true"
-                                               data-show-export="true"
                                                data-pagination="true"
+                                               data-show-export="true"
                                                data-export-types="['excel', 'pdf']"
-                                               data-filter-control="true">
+
+                                               >
                                             <thead>
 
                                                 <tr>
                                                     <th data-sortable="true" data-field="nombre_raiem">Nombre</th>
-                                                    <th data-align="center" data-sortable="true" data-filter-control="select" data-field="localizacion">Localización</th>
-                                                    <th data-editable="true" data-sortable="true" data-field="cantidad">Cantidad</th>
-                                                    <th data-editable="true" data-editable="true" data-field="nivel">Nivel</th>
-                                                    <th data-editable="true" data-field="observaciones">Observaciones</th>
+                                                    <th data-sortable="true" data-align="center" data-field="localizacion">Localización</th>
+                                                    <th data-align="center" data-field="falta">Falta</th>
+                                                    <th data-align="center" data-field="nivel">Nivel</th>
                                                     <th data-align="center" data-field="existe_farmacia">Farmacia</th>
                                                     <th data-visible="false" data-field="key">Clave</th>
                                                     <th data-visible="false" data-field="clase">Clave clase</th>
                                                 </tr>
+
                                             </thead>
                                             <tbody>
 
@@ -245,19 +248,8 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                    <p>Total</p>
-                                    <p>Mochila circulatorio</p>
-                                    <p>Mochila respiratorio</p>
-                                    <p>Mochila pediátrica</p>
-                                    <p>Ampulario</p>
-                                    <p>Cajón 1</p>
-                                    <p>Cajón 2</p>
-                                    <p>Cajón 3</p>
-                                    <p>Cajón 4</p>
-                                    <p>Cajón 5</p>
-                                    <p>Cajón 6</p>
-                                    <p>Cajón 7</p>
-                                    <p>Cajón 8</p>
+                                    <div id="div-informes-localizaciones" class="container">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -319,7 +311,6 @@
         <script src="../vendors/bootstrap-table/src/bootstrap-table.js"></script>
         <script src="../vendors/tableExport.jquery.plugin/tableExport.min.js"></script>
         <script src="../vendors/bootstrap-table/src/extensions/export/bootstrap-table-export.js"></script>
-        <script src="../vendors/bootstrap-table/src/extensions/filter-control/bootstrap-table-filter-control.js"></script>
         <script src="//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
         <script src="../vendors/bootstrap-table/src/extensions/editable/bootstrap-table-editable.js"></script>
         <script src="../vendors/bootstrap-table/src/locale/bootstrap-table-es-ES.js"></script>
@@ -342,7 +333,7 @@
             function TableActions (value, row, index) {
 
                 return [
-                    '<a class="danger remove" data-id="' + row.key + '" data-toggle="modal" data-target="#ModalEliminar" title="Remove">',
+                    '<a href="#" class="danger remove" data-id="' + row.key + '" data-toggle="modal" data-target="#ModalEliminar" title="Borrar">',
                     '<i class="glyphicon glyphicon-remove red"></i>',
                     '</a>'
                 ].join('');
@@ -407,6 +398,12 @@
 
                 $table.on('editable-save.bs.table', function(field, row, oldValue, $el){
 
+
+                    console.log("field:", field);
+                    console.log("row", row);
+                    console.log("oldValue", oldValue);
+                    console.log("el", $el);
+
                     var i = arrayLocalizacionesNombre.indexOf(oldValue.localizacion);
 
                     var update = {
@@ -417,10 +414,32 @@
                         cantidad: oldValue.cantidad,
                         observaciones: oldValue.observaciones,
                         otros_nombres: oldValue.otros_nombres,
-                        clase: oldValue.clase
+                        clase: oldValue.clase,
+                        clave_nivel: oldValue.clave_nivel
                     }                   
 
-                    ref.child(oldValue.key).update(update);                
+                    ref.child(oldValue.key).update(update);
+
+                    var cantidad_previa = $el;
+                    var nueva_cantidad = oldValue.cantidad;
+
+                    if (cantidad_previa != nueva_cantidad){
+                        var ref2 = database.ref("ambulancias/et_699/niveles/" + oldValue.clave_nivel);
+
+                        ref2.child("existe").once("value", function(childSnap) {
+
+                            var nivel_previo = childSnap.val();
+                            var diferencia_cantidad = (cantidad_previa - nueva_cantidad);
+                            var diferencia = (nivel_previo - diferencia_cantidad);
+                            console.log(diferencia);
+                            ref2.update({
+                                "existe": diferencia
+                            });
+                        });
+                    }
+
+
+                    getTablaNivel();
                 });
 
                 $table.bootstrapTable({
@@ -478,7 +497,7 @@
                                 case false:
                                     break;
                                 default:
-                                                          }
+                            }
                             $('#tabla-caduca').bootstrapTable('insertRow', {
                                 index: 1,
                                 row: {
@@ -601,7 +620,7 @@
             }
 
             function getArrayClases(){
-                var ref = firebase.database().ref('clases');
+                var ref = firebase.database().ref('clases').orderByChild('nombre_raiem');
 
                 ref.once("value", function(data) {
                     var i = 0;
@@ -647,6 +666,13 @@
                             value: arrayLocalizacionesKey[i],
                             text: arrayLocalizacionesNombre[i]
                         }));
+
+                        var nuevaLinea =
+                            '<a href="#"><p>' + arrayLocalizacionesNombre[i] +
+                            '</p></a>';
+
+                        $('#div-informes-localizaciones').append(nuevaLinea);
+
                         i++;
 
                     });
@@ -677,7 +703,7 @@
                             default: 
                                 arrayFarmaciaExiste[i] = true;
                                 break;
-                                                        }                        
+                        }                        
                         i++;
                     });
                 });
@@ -692,6 +718,7 @@
             }
 
             function getTablaNivel(){
+                $('#tabla-nivel').bootstrapTable('removeAll');
                 var ref = firebase.database().ref('ambulancias/et_699/niveles/');
 
                 ref.once("value", function(data) {
@@ -700,13 +727,23 @@
 
                         var var_nivel = childSnap.val().nivel;
                         var var_existe = childSnap.val().existe;
-                        
+
                         var a = arrayClasesKey.indexOf(childSnap.val().clase);
                         var b = arrayLocalizacionesKey.indexOf(childSnap.val().localizacion);
                         var c = arrayFarmaciaKey.indexOf(childSnap.val().clase);
 
                         if (var_existe < parseInt(var_nivel)){
-                            /**$('#tabla-nivel').bootstrapTable('insertRow', {
+                            var existe;
+
+                            switch (arrayFarmaciaExiste[c]){
+                                case true:
+                                    existe = "<span class=\"fa fa-check-square\"></span>";
+                                    break;
+                                case false:
+                                    break;
+                                default:
+                            }
+                            $('#tabla-nivel').bootstrapTable('insertRow', {
                                 index: 1,
                                 row: {
                                     nombre_raiem: arrayClasesNombre[a],
@@ -714,12 +751,12 @@
                                     falta: (childSnap.val().nivel - childSnap.val().existe),
                                     nivel: childSnap.val().nivel,
                                     otros_nombres: arrayClasesOtrosNombres[a],
-                                    existe_farmacia: true,
+                                    existe_farmacia: existe,
                                     key: childSnap.key,
-                                    clave_clase: childSnap.val().clase
+                                    clase: childSnap.val().clase
                                 }
-                            });**/
-                            console.log(arrayClasesNombre[a], childSnap.val().nivel, childSnap.val().existe);
+                            });
+                            //console.log(arrayClasesNombre[a], childSnap.val().nivel, childSnap.val().existe);
                         }
                     });
                 });
@@ -740,6 +777,7 @@
                 });
             }
 
+
             init();
 
             function init(){
@@ -750,6 +788,7 @@
                 getTablaTotal();
                 getRevisiones();
                 getTablaNivel();
+
                 //debug001(); //Poner existe a 0 en nivel
             }
             //añadirRegistro(); //TODO borrar
@@ -834,7 +873,7 @@
                                     cantidad : $('#registro-cantidad').val(),
                                     clase : arrayClasesKey[i],
                                     localizacion : $('#registro-localizacion').val(),
-                                    nivel : var_nivel,
+                                    nivel : parseInt(var_nivel),
                                     clave_nivel: var_clave_nivel,
                                     nombre_raiem : arrayClasesNombre[i],
                                     observaciones : " ",
@@ -854,6 +893,8 @@
                                     text: 'Registro añadido.',
                                     type: 'success'
                                 });
+
+                                getTablaNivel();
                             });
 
 
@@ -1010,8 +1051,34 @@
                             text: 'Registro eliminado.',
                             type: 'success'
                         });
+
                         var ref = firebase.database().ref("ambulancias/et_699/existe");
+
+                        var cantidad;
+                        var clave_nivel;
+
+                        ref.child(i).once("value", function(childSnap) {
+                            cantidad = childSnap.val().cantidad;
+                            clave_nivel = childSnap.val().clave_nivel;
+                        })
+
+
+                        var ref2 = firebase.database().ref("ambulancias/et_699/niveles/" + clave_nivel);
+
+                        ref2.child("existe").once("value", function(childSnap) {
+
+                            var nivel_previo = childSnap.val();
+
+                            var diferencia = (nivel_previo - cantidad);
+                            console.log(diferencia);
+                            ref2.update({
+                                "existe": diferencia
+                            });
+                        });
+
                         ref.child(i).remove();
+
+
                     })
                 })
             </script>
