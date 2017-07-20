@@ -671,15 +671,15 @@
                     data.forEach(function (childSnap) {
                         arrayFarmaciaKey[i] = childSnap.key;
                         var bool_i;
+                        console.log(childSnap.key);
 
                         switch (childSnap.val().cantidad) {
                             case 0: 
-                                arrayFarmaciaExiste[i] = true;
+                                arrayFarmaciaExiste[i] = false;
                                 break;
                             default: 
-                                arrayFarmaciaExiste = false;
+                                arrayFarmaciaExiste[i] = true;
                                 break;
-
                                                         }                        
                         i++;
                     });
