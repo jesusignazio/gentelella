@@ -497,7 +497,7 @@
                                 case false:
                                     break;
                                 default:
-                            }
+                                                          }
                             $('#tabla-caduca').bootstrapTable('insertRow', {
                                 index: 1,
                                 row: {
@@ -703,7 +703,7 @@
                             default: 
                                 arrayFarmaciaExiste[i] = true;
                                 break;
-                        }                        
+                                                        }                        
                         i++;
                     });
                 });
@@ -742,7 +742,7 @@
                                 case false:
                                     break;
                                 default:
-                            }
+                                                          }
                             $('#tabla-nivel').bootstrapTable('insertRow', {
                                 index: 1,
                                 row: {
@@ -816,9 +816,14 @@
 
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="registro-caducidad" class="control-label">Fecha de caducidad:</label>
-                                <input type='text' class="form-control" id='registro-caducidad' />
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <label for="registro-caducidad" class="control-label">Fecha de caducidad:</label>
+                                    <input type='text' class="form-control" id='registro-caducidad' />
+                                </div>
+                                <div class="checkbox">
+                                    <label for="registro-esterilizacion"><input id='registro-esterilizacion' type="checkbox">Fecha de esterilización.</label>
+                                </div>
                                 <script type="text/javascript">
                                     $(function () {
                                         $('#registro-caducidad').datetimepicker({
@@ -827,6 +832,7 @@
                                         });
                                     });
                                 </script>
+
                             </div>
                             <div class="form-group">
                                 <label for="registro-cantidad" class="control-label">Cantidad:</label>
@@ -834,7 +840,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="registro-observaciones" class="control-label">Observaciones:</label>
-                                <textarea class="form-control" id="registro-obseraciones"></textarea>
+                                <textarea class="form-control" id="registro-observaciones"></textarea>
                             </div>
                         </form>
                     </div>
@@ -876,7 +882,8 @@
                                     nivel : parseInt(var_nivel),
                                     clave_nivel: var_clave_nivel,
                                     nombre_raiem : arrayClasesNombre[i],
-                                    observaciones : " ",
+                                    observaciones : $('#registro-observaciones').val(),
+                                    esterilizacion : $('#registro-esterilizacion').is(':checked')
                                 }
 
                                 var ref = firebase.database().ref("ambulancias/et_699/existe/");
@@ -894,7 +901,7 @@
                                     type: 'success'
                                 });
 
-                                getTablaNivel();
+                                //getTablaNivel();
                             });
 
 
