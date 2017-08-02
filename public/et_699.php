@@ -180,7 +180,8 @@
                                                data-sort-order="asc" 
                                                cellspacing="0" 
                                                width="100%"
-                                               data-mobile-responsive="true"                                               data-show-columns="true"
+                                               data-mobile-responsive="true"                                               
+                                               data-show-columns="true"
                                                data-show-export="true"
                                                data-pagination="true"
                                                data-export-types="['excel', 'pdf']"
@@ -213,6 +214,8 @@
                                                data-sort-order="asc" 
                                                cellspacing="0" 
                                                width="100%"
+                                               data-mobile-responsive='true'
+                                               data-show-columns='true'
                                                data-pagination="true"
                                                data-show-export="true"
                                                data-export-types="['excel', 'pdf']"
