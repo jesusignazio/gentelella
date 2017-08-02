@@ -111,7 +111,7 @@
                                                 <tr>
                                                     <th data-sortable="true" data-field="nombre_raiem">Nombre</th>
                                                     <th data-align="center" data-sortable="true" data-field="localizacion">Localización</th>
-                                                    <th data-align="center" data-editable="true" data-sortable="true" data-field="caducidad">Caducidad</th>
+                                                    <th data-align="center" data-editable="true" data-sortable="true" data-field="caducidad" data-sorter="sortCaducidad">Caducidad</th>
                                                     <th data-align="center" data-editable="true" data-editable="true" data-field="cantidad">Cantidad</th>
                                                     <th data-align="center" data-field="nivel">Nivel</th>
                                                     <th data-editable="true" data-field="observaciones">Observaciones</th>
@@ -191,7 +191,7 @@
                                                 <tr>
                                                     <th data-sortable="true" data-field="nombre_raiem">Nombre</th>
                                                     <th data-align="center" data-sortable="true" data-field="localizacion">Localización</th>
-                                                    <th data-align="center" data-editable="true" data-sortable="true" data-field="caducidad">Caducidad</th>
+                                                    <th data-align="center" data-editable="true" data-sortable="true" data-field="caducidad" data-sorter="sortCaducidad">Caducidad</th>
                                                     <th data-align="center" data-editable="true" data-editable="true" data-field="cantidad">Cantidad</th>
                                                     <th data-editable="true" data-field="observaciones">Observaciones</th>
                                                     <th data-editable="true" data-visible="false" data-field="otros_nombres">Otros nombres</th>
@@ -500,7 +500,7 @@
                                 case false:
                                     break;
                                 default:
-                                                          }
+                            }
                             $('#tabla-caduca').bootstrapTable('insertRow', {
                                 index: 1,
                                 row: {
@@ -706,7 +706,7 @@
                             default: 
                                 arrayFarmaciaExiste[i] = true;
                                 break;
-                                                        }                        
+                        }                        
                         i++;
                     });
                 });
@@ -745,7 +745,7 @@
                                 case false:
                                     break;
                                 default:
-                                                          }
+                            }
                             $('#tabla-nivel').bootstrapTable('insertRow', {
                                 index: 1,
                                 row: {
@@ -779,6 +779,27 @@
                     });
                 });
             }
+
+
+            function sortCaducidad(a,b){
+                var i;
+                var moment_a = moment(a, "DD-MM-YYYY");
+                var moment_b = moment(b, "DD-MM-YYYY");
+
+                if (moment(moment_a).isBefore(moment_b)){
+                    i = -1; // true
+                }
+                else if (moment(moment_a).isSame(moment_b)){
+                    i = 0;
+                } else {
+                    i = 1;
+                }
+
+
+                return i;
+            }
+
+
 
 
             init();
