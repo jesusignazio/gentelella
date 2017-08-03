@@ -21,6 +21,8 @@
         <link rel="stylesheet" href="../vendors/bootstrap-table/src/bootstrap-table.css">
         <link href="../vendors/pnotify/dist/pnotify.css" media="all" rel="stylesheet" type="text/css" />
         <link href="../vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="../vendors/bootstrap-table/src/extensions/filter-control/bootstrap-table-filter-control.js">
+
 
     </head>
 
@@ -105,16 +107,17 @@
                                                data-show-export="true"
                                                data-pagination="true"
                                                data-export-types="['excel', 'pdf']"
+                                               data-filter-control="true"
                                                >
                                             <thead>
 
                                                 <tr>
                                                     <th data-sortable="true" data-field="nombre_raiem">Nombre</th>
-                                                    <th data-align="center" data-sortable="true" data-field="localizacion">Localización</th>
+                                                    <th data-align="center" data-formatter="formatterLocalizacion" data-filter-control="select" data-sortable="true" data-field="localizacion">Localización</th>
                                                     <th data-align="center" data-editable="true" data-sortable="true" data-field="caducidad" data-sorter="sortCaducidad">Caducidad</th>
                                                     <th data-align="center" data-editable="true" data-editable="true" data-field="cantidad">Cantidad</th>
                                                     <th data-align="center" data-field="nivel">Nivel</th>
-                                                    <th data-editable="true" data-field="observaciones">Observaciones</th>
+                                                    <th data-editable="true" data-sortable="true" data-field="observaciones">Observaciones</th>
                                                     <th data-editable="true" data-visible="false" data-field="otros_nombres">Otros nombres</th>
                                                     <th data-align="center" data-formatter="TableActions">Acciones</th>
                                                     <th data-visible="false" data-field="key">Clave</th>
@@ -190,7 +193,7 @@
 
                                                 <tr>
                                                     <th data-sortable="true" data-field="nombre_raiem">Nombre</th>
-                                                    <th data-align="center" data-sortable="true" data-field="localizacion">Localización</th>
+                                                    <th data-align="center" data-sortable="true" data-formatter="formatterLocalizacion" data-field="localizacion">Localización</th>
                                                     <th data-align="center" data-editable="true" data-sortable="true" data-field="caducidad" data-sorter="sortCaducidad">Caducidad</th>
                                                     <th data-align="center" data-editable="true" data-editable="true" data-field="cantidad">Cantidad</th>
                                                     <th data-editable="true" data-field="observaciones">Observaciones</th>
@@ -225,7 +228,7 @@
 
                                                 <tr>
                                                     <th data-sortable="true" data-field="nombre_raiem">Nombre</th>
-                                                    <th data-sortable="true" data-align="center" data-field="localizacion">Localización</th>
+                                                    <th data-sortable="true" data-formatter="formatterLocalizacion" data-align="center" data-field="localizacion">Localización</th>
                                                     <th data-align="center" data-field="falta">Falta</th>
                                                     <th data-align="center" data-field="nivel">Nivel</th>
                                                     <th data-align="center" data-field="existe_farmacia">Farmacia</th>
@@ -321,6 +324,8 @@
         <script src="../vendors/jspdf-autotable/dist/jspdf.plugin.autotable.js"></script>
         <script src="../vendors/pnotify/dist/pnotify.js"></script>
         <script src="../vendors/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
+        <script src="../vendors/bootstrap-table/src/extensions/filter-control/bootstrap-table-filter-control.js"></script>
+
 
 
         <script>
@@ -342,15 +347,17 @@
                 ].join('');
 
             }
+            
+            
 
-            function getLabelLocalizacion(string){
+            function formatterLocalizacion(string){
                 var label;
 
                 switch(string) {
                     case "Puerta ampulario":
                         var label = "<span class=\"label label-warning\">" + string + "</span>"
                         break;
-                    case "Ampulario":
+                    case "Ampulario&#8291":
                         var label = "<span class=\"label label-warning\">" + string + "</span>"
                         break;
                     case "Mochila respiratorio":
@@ -397,15 +404,9 @@
                 var ref = database.ref("ambulancias/et_699/existe");
                 var $table = $('#tabla-total');
 
-                ref.on('value', gotData, errData);
+                ref.once('value', gotData, errData);
 
                 $table.on('editable-save.bs.table', function(field, row, oldValue, $el){
-
-
-                    console.log("field:", field);
-                    console.log("row", row);
-                    console.log("oldValue", oldValue);
-                    console.log("el", $el);
 
                     var i = arrayLocalizacionesNombre.indexOf(oldValue.localizacion);
 
@@ -442,7 +443,7 @@
                     }
 
 
-                    getTablaNivel();
+
                 });
 
                 $table.bootstrapTable({
@@ -500,7 +501,7 @@
                                 case false:
                                     break;
                                 default:
-                            }
+                                                          }
                             $('#tabla-caduca').bootstrapTable('insertRow', {
                                 index: 1,
                                 row: {
@@ -706,7 +707,7 @@
                             default: 
                                 arrayFarmaciaExiste[i] = true;
                                 break;
-                        }                        
+                                                        }                        
                         i++;
                     });
                 });
@@ -745,7 +746,7 @@
                                 case false:
                                     break;
                                 default:
-                            }
+                                                          }
                             $('#tabla-nivel').bootstrapTable('insertRow', {
                                 index: 1,
                                 row: {
@@ -912,6 +913,8 @@
 
                                 var ref = firebase.database().ref("ambulancias/et_699/existe/");
                                 ref.push(data);
+
+                                //TODO insertar linea
 
                                 var var_existe = (parseInt(var_existe_previo) + parseInt($('#registro-cantidad').val()));
 
