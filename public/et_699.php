@@ -374,6 +374,16 @@
                         }
                 return label;
             }
+            
+             function formatterCaducidad(string){
+                var i;
+                 
+                 var moment_string = moment(string, "DD-MM-YYYY");
+                 var moment_3meses = moment().add(3, 'M');
+
+                
+                return i;
+            }
 
             function getTextLocalizacion(string){
                 var label;
