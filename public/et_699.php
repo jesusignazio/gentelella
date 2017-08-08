@@ -81,7 +81,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-md-10 col-sm-10 col-xs-10">
                             <div class="x_panel">
                                 <div class="x_title">
@@ -90,13 +90,13 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                    
+
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                     <div class="row">
 
                         <div class="col-xs-12">
@@ -133,10 +133,10 @@
                                                     <th data-align="center" data-field="nivel">Nivel</th>
                                                     <th data-editable="true" data-sortable="true" data-field="observaciones">Observaciones</th>
                                                     <th data-editable="true" data-visible="false" data-field="otros_nombres">Otros nombres</th>
-                                                    <th data-align="center" data-formatter="TableActions">Acciones</th>
                                                     <th data-visible="false" data-field="key">Clave</th>
                                                     <th data-visible="false" data-field="clase">Clave clase</th>
                                                     <th data-visible="false" data-field="clave_nivel">Clave nivel</th>
+                                                    <th data-align="center" data-formatter="TableActions">Acciones</th>
 
                                                 </tr>
                                             </thead>
@@ -362,8 +362,6 @@
 
         }
 
-
-
         function formatterLocalizacion(string){
             var label;
 
@@ -484,35 +482,34 @@
                 var keys = Object.keys(entradas);
 
                 for (var i = 0; i < keys.length; i++) {
-
                     var k = keys[i];
-                    var nombre_raiem = entradas[k].nombre_raiem;
-                    var caducidad = entradas[k].caducidad;
-                    var cantidad = entradas[k].cantidad;
+
                     var localizacion = entradas[k].localizacion;
-                    var observaciones = entradas[k].observaciones;
+
                     var clase = entradas[k].clase;
-                    var nivel = entradas[k].nivel;
-                    var clave_nivel = entradas[k].clave_nivel;
+                    var caducidad = entradas[k].caducidad;
                     var a = arrayClasesKey.indexOf(clase);
                     var b = arrayLocalizacionesKey.indexOf(localizacion);
                     var c = arrayFarmaciaKey.indexOf(clase);
 
                     $table.bootstrapTable('insertRow', {
-                        index: 1,
+                        index: i,
                         row: {
                             nombre_raiem: arrayClasesNombre[a],
                             localizacion: arrayLocalizacionesNombre[b],
-                            nivel: nivel,
-                            caducidad: caducidad,
-                            cantidad: cantidad,
-                            observaciones: observaciones,
+                            caducidad: entradas[k].caducidad,
+                            cantidad: entradas[k].cantidad,
+                            nivel: entradas[k].nivel,
+                            observaciones: entradas[k].observaciones,
                             otros_nombres: arrayClasesOtrosNombres[a],
-                            key: k,
-                            clase: clase,
-                            clave_nivel: clave_nivel
+                            key: keys[i],
+                            clase: entradas[k].clase,
+                            clave_nivel: entradas[k].clave_nivel,
+                            acciones: true
                         }
                     });
+                    
+                
 
                     var today = moment();
                     var e = moment(caducidad, "DD-MM-YYYY");
@@ -525,15 +522,15 @@
                             case false:
                                 break;
                             default:
-                                                      }
+                        }
                         $('#tabla-caduca').bootstrapTable('insertRow', {
                             index: 1,
                             row: {
                                 nombre_raiem: arrayClasesNombre[a],
                                 localizacion: arrayLocalizacionesNombre[b],
                                 caducidad: caducidad,
-                                cantidad: cantidad,
-                                observaciones: observaciones,
+                                cantidad: entradas[k].cantidad,
+                                observaciones: entradas[k].observaciones,
                                 otros_nombres: arrayClasesOtrosNombres[a],
                                 existe_farmacia: existe,
                                 key: k,
@@ -731,7 +728,7 @@
                         default: 
                             arrayFarmaciaExiste[i] = true;
                             break;
-                                                    }                        
+                    }                        
                     i++;
                 });
             });
@@ -770,7 +767,7 @@
                             case false:
                                 break;
                             default:
-                                                      }
+                        }
                         $('#tabla-nivel').bootstrapTable('insertRow', {
                             index: 1,
                             row: {
@@ -805,7 +802,6 @@
             });
         }
 
-
         function sortCaducidad(a,b){
             var i;
             var moment_a = moment(a, "DD-MM-YYYY");
@@ -824,9 +820,6 @@
             return i;
         }
 
-
-
-
         init();
 
         function init(){
@@ -840,7 +833,7 @@
 
             //debug001(); //Poner existe a 0 en nivel
         }
-        //añadirRegistro(); //TODO borrar
+
 
     </script>
 
