@@ -61,7 +61,7 @@
                     <div class="clearfix"></div>
 
                     <div class="row row-eq-height">
-                        <div class="col-md-2 col-sm-2 col-xs-2">
+                        <div class="col-xs-2">
                             <div class="x_panel">
                                 <div class="x_title">
                                     <h2>Estado</h2>
@@ -82,7 +82,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-10 col-sm-10 col-xs-10">
+                        <div class="col-xs-10">
                             <div class="x_panel">
                                 <div class="x_title">
                                     <h2>Estado</h2>
@@ -136,6 +136,8 @@
                                                     <th data-visible="false" data-field="key">Clave</th>
                                                     <th data-visible="false" data-field="clase">Clave clase</th>
                                                     <th data-visible="false" data-field="clave_nivel">Clave nivel</th>
+                                                    <th data-visible="false" data-field="lote" data-sortable="true" data-editable="true">Lote</th>
+                                                    <th data-visible="false" data-align="center" data-sortable="true" data-field="ultima_edicion" data-sorter="sortCaducidad">Última edición</th>
                                                     <th data-align="center" data-formatter="TableActions">Acciones</th>
 
                                                 </tr>
@@ -145,6 +147,7 @@
                                             </tbody>
                                         </table>
                                         <button id="añadirRegistro" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ModalRegistro"><span class="fa fa-plus"></span> Añadir</button>
+                                        <button id="añadirNivel" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ModalAñadirNivel"><span class="fa fa-plus"></span> Añadir nivel</button>
                                     </div>
                                 </div>
                             </div>
@@ -152,19 +155,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-2">
-                        <div class="x_panel">
-                            <div class="x_title">
-                                <h2>Últimas reposiciones</h2>
 
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="x_content">
-                                <button id="añadirNivel" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ModalAñadirNivel"><span class="fa fa-plus"></span> Añadir nivel</button>
-
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="col-sm-2">
                         <div class="x_panel">
@@ -181,10 +172,10 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-8">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>Incidencias</h2>
+                                <h2>Incidencias  <span id="badge_incidencias" class="badge">0</span></h2> 
 
                                 <div class="clearfix"></div>
                             </div>
@@ -213,7 +204,7 @@
                                                 <th data-editable="true" data-field="observaciones">Observaciones</th>
                                                 <th data-editable="true" data-visible="false" data-field="otros_nombres">Otros nombres</th>
                                                 <th data-align="center" data-field="existe_farmacia">Farmacia</th>
-                                                <th data-visible="false" data-field="key">Clave</th>
+                                                <th data-visible="false" data-field="key">Clave nivel</th>
                                                 <th data-visible="false" data-field="clase">Clave clase</th>
                                             </tr>
                                         </thead>
@@ -246,7 +237,7 @@
                                                 <th data-align="center" data-field="falta">Falta</th>
                                                 <th data-align="center" data-field="nivel">Nivel</th>
                                                 <th data-align="center" data-field="existe_farmacia">Farmacia</th>
-                                                <th data-visible="false" data-field="key">Clave</th>
+                                                <th data-visible="false" data-field="key">Clave nivel</th>
                                                 <th data-visible="false" data-field="clase">Clave clase</th>
                                             </tr>
 
@@ -351,11 +342,18 @@
         var arrayLocalizacionesNombre = [];
         var arrayFarmaciaExiste = [];
         var arrayFarmaciaKey = [];
+        var numero_incidencias = 0;
 
         function TableActions (value, row, index) {
 
+            //console.log(value);
+            //console.log(row);
+            //console.log(index);
+
+            var j = 0;
+
             return [
-                '<a href="#" class="danger remove" data-id="' + row.key + '" data-toggle="modal" data-target="#ModalEliminar" title="Borrar">',
+                '<a href="#" class="danger remove" data-idrow="' + j + '"data-id="' + row.key + '" data-toggle="modal" data-target="#ModalEliminar" title="Borrar">',
                 '<i class="glyphicon glyphicon-remove red"></i>',
                 '</a>'
             ].join('');
@@ -441,7 +439,9 @@
                     observaciones: oldValue.observaciones,
                     otros_nombres: oldValue.otros_nombres,
                     clase: oldValue.clase,
-                    clave_nivel: oldValue.clave_nivel
+                    clave_nivel: oldValue.clave_nivel,
+                    lote: oldValue.lote,
+                    ultima_edicion: moment().format('DD-MM-YYYY HH:mm')
                 }                   
 
                 ref.child(oldValue.key).update(update);
@@ -457,7 +457,7 @@
                         var nivel_previo = childSnap.val();
                         var diferencia_cantidad = (cantidad_previa - nueva_cantidad);
                         var diferencia = (nivel_previo - diferencia_cantidad);
-                        console.log(diferencia);
+
                         ref2.update({
                             "existe": diferencia
                         });
@@ -493,7 +493,7 @@
                     var c = arrayFarmaciaKey.indexOf(clase);
 
                     $table.bootstrapTable('insertRow', {
-                        index: i,
+                        index: 0,
                         row: {
                             nombre_raiem: arrayClasesNombre[a],
                             localizacion: arrayLocalizacionesNombre[b],
@@ -505,15 +505,18 @@
                             key: keys[i],
                             clase: entradas[k].clase,
                             clave_nivel: entradas[k].clave_nivel,
+                            ultima_edicion: entradas[k].ultima_edicion,
+                            lote: entradas[k].lote,
                             acciones: true
                         }
                     });
-                    
-                
 
-                    var today = moment();
+
+
+                    var hoy = moment();
                     var e = moment(caducidad, "DD-MM-YYYY");
-                    if (e.diff(today, 'days') < 0){
+                    if (e.diff(hoy, 'days') < 0){
+                        numero_incidencias++;
                         var existe;
                         switch (arrayFarmaciaExiste[c]){
                             case true:
@@ -539,6 +542,7 @@
                         });
                     }
                 }
+
             }
 
             function errData(err) {
@@ -758,6 +762,7 @@
                     var c = arrayFarmaciaKey.indexOf(childSnap.val().clase);
 
                     if (var_existe < parseInt(var_nivel)){
+                        numero_incidencias++;
                         var existe;
 
                         switch (arrayFarmaciaExiste[c]){
@@ -781,8 +786,9 @@
                                 clase: childSnap.val().clase
                             }
                         });
-                        //console.log(arrayClasesNombre[a], childSnap.val().nivel, childSnap.val().existe);
                     }
+                    // Badge numero_incidencias.
+                    $('#badge_incidencias').html(numero_incidencias);
                 });
             });
 
@@ -925,7 +931,9 @@
                                 clave_nivel: var_clave_nivel,
                                 nombre_raiem : arrayClasesNombre[i],
                                 observaciones : $('#registro-observaciones').val(),
-                                esterilizacion : $('#registro-esterilizacion').is(':checked')
+                                esterilizacion : $('#registro-esterilizacion').is(':checked'),
+                                lote : '',
+                                ultima_edicion: moment().format('DD-MM-YYYY HH:mm')
                             }
 
                             var ref = firebase.database().ref("ambulancias/et_699/existe/");
@@ -1096,13 +1104,7 @@
 
                 $('#button-eliminar').on('click', function () {
 
-                    //TODo show notification
-                    new PNotify({
-                        title: 'Eliminado',
-                        text: 'Registro eliminado.',
-                        type: 'success'
-                    });
-
+                    // Borrar el registro de Firebase//
                     var ref = firebase.database().ref("ambulancias/et_699/existe");
 
                     var cantidad;
@@ -1111,23 +1113,37 @@
                     ref.child(i).once("value", function(childSnap) {
                         cantidad = childSnap.val().cantidad;
                         clave_nivel = childSnap.val().clave_nivel;
+
+                        var ref2 = firebase.database().ref("ambulancias/et_699/niveles/" + clave_nivel);
+
+                        ref2.child("existe").once("value", function(childSnap) {
+
+                            var nivel_previo = childSnap.val();
+
+                            var diferencia = (nivel_previo - cantidad);
+                            console.log(diferencia);
+                            ref2.update({
+                                "existe": diferencia
+                            });
+                        });
+
+                        ref.child(i).remove();
+
                     })
 
 
-                    var ref2 = firebase.database().ref("ambulancias/et_699/niveles/" + clave_nivel);
 
-                    ref2.child("existe").once("value", function(childSnap) {
 
-                        var nivel_previo = childSnap.val();
+                    // TODO Borrar el registro de la tabla.
 
-                        var diferencia = (nivel_previo - cantidad);
-                        console.log(diferencia);
-                        ref2.update({
-                            "existe": diferencia
-                        });
+
+
+                    //Notificar UI
+                    new PNotify({
+                        title: 'Eliminado',
+                        text: 'Registro eliminado.',
+                        type: 'success'
                     });
-
-                    ref.child(i).remove();
 
 
                 })
