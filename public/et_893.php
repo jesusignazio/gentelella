@@ -511,9 +511,9 @@
                     
                 
 
-                    var today = moment();
+                    var hoy = moment().add(1, 'M');
                     var e = moment(caducidad, "DD-MM-YYYY");
-                    if (e.diff(today, 'days') < 0){
+                    if (e.diff(hoy, 'days') < 0){
                         var existe;
                         switch (arrayFarmaciaExiste[c]){
                             case true:

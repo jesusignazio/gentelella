@@ -513,7 +513,7 @@
 
 
 
-                    var hoy = moment();
+                    var hoy = moment().add(1, 'M');
                     var e = moment(caducidad, "DD-MM-YYYY");
                     if (e.diff(hoy, 'days') < 0){
                         numero_incidencias++;
