@@ -145,6 +145,7 @@
                                             </tbody>
                                         </table>
                                         <button id="añadirRegistro" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ModalRegistro"><span class="fa fa-plus"></span> Añadir</button>
+                                        <button id="añadirNivel" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ModalAñadirNivel"><span class="fa fa-plus"></span> Añadir nivel</button>
                                     </div>
                                 </div>
                             </div>
@@ -152,19 +153,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-2">
-                        <div class="x_panel">
-                            <div class="x_title">
-                                <h2>Últimas reposiciones</h2>
 
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="x_content">
-                                <button id="añadirNivel" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ModalAñadirNivel"><span class="fa fa-plus"></span> Añadir nivel</button>
-
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="col-sm-2">
                         <div class="x_panel">
@@ -181,7 +170,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-8">
                         <div class="x_panel">
                             <div class="x_title">
                                 <h2>Incidencias</h2>
@@ -250,6 +239,40 @@
                                                 <th data-visible="false" data-field="clase">Clave clase</th>
                                             </tr>
 
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="container">
+                                    <h4>Caduca en los próximos dos meses:</h4>
+                                    <table id="tabla-caduca-dosmeses" data-toggle="table"
+                                           class="table table-striped table-bordered dt-responsive nowrap" 
+                                           data-sort-name="nombre_raiem" 
+                                           data-sort-order="asc" 
+                                           cellspacing="0" 
+                                           width="100%"
+                                           data-mobile-responsive="true"                                               
+                                           data-show-columns="true"
+                                           data-show-export="true"
+                                           data-pagination="true"
+                                           data-export-types="['excel', 'pdf']"
+                                           >
+                                        <thead>
+
+                                            <tr>
+                                                <th data-sortable="true" data-field="nombre_raiem">Nombre</th>
+                                                <th data-align="center" data-sortable="true" data-formatter="formatterLocalizacion" data-field="localizacion">Localización</th>
+                                                <th data-align="center" data-editable="true" data-sortable="true" data-field="caducidad" data-sorter="sortCaducidad">Caducidad</th>
+                                                <th data-align="center" data-editable="true" data-editable="true" data-field="cantidad">Cantidad</th>
+                                                <th data-editable="true" data-field="observaciones">Observaciones</th>
+                                                <th data-editable="true" data-visible="false" data-field="otros_nombres">Otros nombres</th>
+                                                <th data-align="center" data-field="existe_farmacia">Farmacia</th>
+                                                <th data-visible="false" data-field="key">Clave</th>
+                                                <th data-visible="false" data-field="clase">Clave clase</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
 
@@ -432,6 +455,14 @@
 
                 var i = arrayLocalizacionesNombre.indexOf(oldValue.localizacion);
 
+                var lote;
+                if (oldValue.lote){
+                    lote = oldValue.lote;
+                }
+                else {
+                    lote = null;
+                }
+                
                 var update = {
                     nombre_raiem: oldValue.nombre_raiem,
                     localizacion: arrayLocalizacionesKey[i],
@@ -441,8 +472,10 @@
                     observaciones: oldValue.observaciones,
                     otros_nombres: oldValue.otros_nombres,
                     clase: oldValue.clase,
-                    clave_nivel: oldValue.clave_nivel
-                }                   
+                    clave_nivel: oldValue.clave_nivel,
+                    lote: lote,
+                    ultima_edicion: moment().format('DD-MM-YYYY HH:mm')
+                }                              
 
                 ref.child(oldValue.key).update(update);
 
@@ -458,14 +491,12 @@
                         var diferencia_cantidad = (cantidad_previa - nueva_cantidad);
                         var diferencia = (nivel_previo - diferencia_cantidad);
                         console.log(diferencia);
+                        
                         ref2.update({
                             "existe": diferencia
                         });
                     });
                 }
-
-
-
             });
 
             $table.bootstrapTable({
@@ -477,6 +508,7 @@
             function gotData(data){
                 $table.bootstrapTable('removeAll');
                 $('#tabla-caduca').bootstrapTable('removeAll');
+                $('#tabla-caduca-dosmeses').bootstrapTable('removeAll');
 
                 var entradas = data.val();
                 var keys = Object.keys(entradas);
@@ -493,7 +525,7 @@
                     var c = arrayFarmaciaKey.indexOf(clase);
 
                     $table.bootstrapTable('insertRow', {
-                        index: i,
+                        index: 1,
                         row: {
                             nombre_raiem: arrayClasesNombre[a],
                             localizacion: arrayLocalizacionesNombre[b],
@@ -505,13 +537,16 @@
                             key: keys[i],
                             clase: entradas[k].clase,
                             clave_nivel: entradas[k].clave_nivel,
+                            ultima_edicion: entradas[k].ultima_edicion,
+                            lote: entradas[k].lote,
                             acciones: true
                         }
                     });
-                    
-                
 
-                    var hoy = moment().add(1, 'M');
+
+
+                    var hoy = moment();
+                    var dos_meses = moment().add(3, 'M');
                     var e = moment(caducidad, "DD-MM-YYYY");
                     if (e.diff(hoy, 'days') < 0){
                         var existe;
@@ -522,8 +557,33 @@
                             case false:
                                 break;
                             default:
-                        }
+                                                      }
                         $('#tabla-caduca').bootstrapTable('insertRow', {
+                            index: 1,
+                            row: {
+                                nombre_raiem: arrayClasesNombre[a],
+                                localizacion: arrayLocalizacionesNombre[b],
+                                caducidad: caducidad,
+                                cantidad: entradas[k].cantidad,
+                                observaciones: entradas[k].observaciones,
+                                otros_nombres: arrayClasesOtrosNombres[a],
+                                existe_farmacia: existe,
+                                key: k,
+                                clase: clase
+                            }
+                        });
+                    }
+                    if (e.diff(dos_meses, 'days') < 0){
+                        var existe;
+                        switch (arrayFarmaciaExiste[c]){
+                            case true:
+                                existe = "<span class=\"fa fa-check-square\"></span>";
+                                break;
+                            case false:
+                                break;
+                            default:
+                                                      }
+                        $('#tabla-caduca-dosmeses').bootstrapTable('insertRow', {
                             index: 1,
                             row: {
                                 nombre_raiem: arrayClasesNombre[a],
@@ -728,7 +788,7 @@
                         default: 
                             arrayFarmaciaExiste[i] = true;
                             break;
-                    }                        
+                                                    }                        
                     i++;
                 });
             });
@@ -767,7 +827,7 @@
                             case false:
                                 break;
                             default:
-                        }
+                                                      }
                         $('#tabla-nivel').bootstrapTable('insertRow', {
                             index: 1,
                             row: {
